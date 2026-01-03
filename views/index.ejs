@@ -6,26 +6,39 @@
     <title></title>
     <link rel="stylesheet" href="/css/style.css">
   </head>
-  <body>
-    <p>Testing</p>
 
-    <div id="routingTestDiv">
-      <a href="/test">
-        <button>
-          Routing Test 
-        </button>
-      </a>     
-    </div>
+  <div id="Background">
+    <body>
+      <p>Testing</p>
 
-    <div id="htmxTestDiv">
-      <button hx-get="/test/htmx"
-              hx-trigger="click"
-              hx-target="#htmxTestDiv"
-              hx-swap="outerHTML">
-        htmxTest
-      </button>     
-    </div>
+      <div id="routingTestDiv">
+        <a href="/test">
+          <button>
+            Routing Test 
+          </button>
+        </a>     
+      </div>
 
-    <script src='/javascript/htmx.min.js'></script>
-  </body>
+      <div id="htmxTestDiv">
+        <button hx-get="/test/htmx"
+                hx-trigger="click"
+                hx-target="#htmxTestDiv"
+                hx-swap="outerHTML">
+          htmxTest
+        </button>     
+      </div>
+
+      <div id="Position-Test">
+        <p id="para-text">
+          Testing Pos
+        </p>
+        <a href="/background/background">
+          Background
+        </a>
+        
+      </div>
+
+      <script src='/javascript/htmx.min.js'></script>
+    </body>
+  </div>
 </html>
