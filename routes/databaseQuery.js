@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const supabase = require("../middleware/database.js")
+const supabase = require("../middleware/supabase.js")
 
 async function getNames() {
   const { data, error } = await supabase
