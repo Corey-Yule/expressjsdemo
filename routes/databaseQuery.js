@@ -1,20 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const sql = require("../middleware/database.js")
+const supabase = require("../middleware/database.js")
 
 async function getNames() {
-  const names = await sql`
-    SELECT
-      *
-    FROM
-      TestTable
-  `
+  const { data, error } = await supabase
+    .from('TestTable')
+    .select()
 
-  return names
+  return data
 }
 
 router.get('/', (req, res) => {
-  console.log(getNames())
+  getNames().then(function(result) {
+    console.log(result)
+  })
 })
 
 module.exports = router
