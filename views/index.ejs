@@ -10,6 +10,7 @@
   <div id="Background">
     <body>
       <p>Testing</p>
+
       <!--Routing Test-->
       <div id="routingTestDiv">
         <a href="/test">
@@ -18,6 +19,7 @@
           </button>
         </a>     
       </div>
+
       <!--Htmx Test-->
       <div id="htmxTestDiv">
         <button hx-get="/test/htmx"
@@ -27,27 +29,38 @@
           htmxTest
         </button>     
       </div>
+
       <!--Position Test-->
       <div id="Position-Test">
         <p id="para-text">
           Testing Pos
         </p>
-        <!--Background Test-->
-        <div>
-          <a href="/background/background">
-          <button>
-            Background Test
-          </button>
-        </a>
-        </div>
-        <!--Login Test-->
-        <div>
-          <a href="/LoginPage/LoginPage">
-          <button>
-            Login Page
-          </button>
-        </a>
-        </div>
+      </div>
+
+      <!--Background Test-->
+      <div>
+        <a href="/background">
+        <button>
+          Background Test
+        </button>
+      </a>
+      </div>
+
+      <!--Login Test-->
+      <div>
+        <a href="/LoginPage">
+        <button>
+          Login Page
+        </button>
+      </a>
+      </div>
+      
+      <!--database Test-->
+      <div id="databaseTest">
+        <button hx-get="/database"
+                hx-trigger="click">
+          databaseTest
+        </button>
       </div>
       <!--JavaScript-->
       <script src='/javascript/htmx.min.js'></script>

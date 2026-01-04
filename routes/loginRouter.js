@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/loginPage', (req, res) => {
+router.get('/', (req, res) => {
   res.render('LoginPage/login')
 })
 
