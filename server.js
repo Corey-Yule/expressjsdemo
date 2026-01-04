@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-require("dotenv").config()
+//require("dotenv").config()
 
 app.set('view engine', 'ejs')
 
@@ -15,10 +15,12 @@ app.get('/', (req, res) => {
 
 const testRouter = require('./routes/testRouter.js')
 const backgroundRouter = require('./routes/backgroundRouter.js')
+const loginRouter = require('./routes/loginRouter.js')
 const databaseQuery = require('./routes/databaseQuery.js')
 
 app.use('/test', testRouter);
 app.use('/background', backgroundRouter); //Background
+app.use('/LoginPage', loginRouter); //Login
 app.use('/database', databaseQuery)
 
 app.listen(port, () => {
