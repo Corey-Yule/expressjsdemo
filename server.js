@@ -1,10 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-<<<<<<< HEAD
 //require("dotenv").config()
-=======
->>>>>>> 29d66f461c1b062154c0b5bc23b0053d13a79b61
 
 app.set('view engine', 'ejs')
 
