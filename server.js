@@ -1,7 +1,8 @@
+require("dotenv").config()
 const express = require('express')
 const app = express()
 const port = 3000
-//require("dotenv").config()
+
 
 app.set('view engine', 'ejs')
 
@@ -11,7 +12,13 @@ app.use(express.json())
 
 app.get('/', (req, res) => {
   res.render('index')
-})
+});
+
+// Supabase OAuth callback
+app.get("/auth/callback", (req, res) => {
+  res.redirect("/dashboard");
+});
+
 
 const testRouter = require('./routes/testRouter.js')
 const backgroundRouter = require('./routes/backgroundRouter.js')
@@ -20,9 +27,11 @@ const databaseQuery = require('./routes/databaseQuery.js')
 
 app.use('/test', testRouter);
 app.use('/background', backgroundRouter); //Background
-app.use('/LoginPage', loginRouter); //Login
-app.use('/database', databaseQuery)
+app.use("/login", loginRouter); //Login
+app.use('/database', databaseQuery);
+
+
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
-})
+});
