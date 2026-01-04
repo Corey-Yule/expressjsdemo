@@ -1,35 +1,22 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js";
 
-const supabase = createClient(
-  "https://garrivevhpafuokloots.supabase.co",
-  "YOUR_PUBLIC_ANON_KEY"
-);
+//Sign up and login buttons and form handles (Toggles)
+const loginBtn = document.getElementById("login-btn");
+const signupBtn = document.getElementById("signup-btn");
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
 
-// Email/password login
-document.getElementById("login-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    alert(error.message);
-  } else {
-    window.location.href = "/dashboard";
-  }
+// Show login form
+loginBtn.addEventListener("click", () => {
+  loginBtn.classList.add("active");
+  signupBtn.classList.remove("active");
+  loginForm.classList.add("active");
+  signupForm.classList.remove("active");
 });
 
-// GitHub OAuth Test
-document.getElementById("github").addEventListener("click", async () => {
-  await supabase.auth.signInWithOAuth({
-    provider: "github",
-    options: {
-      redirectTo: "http://localhost:3000/auth/callback",
-    },
-  });
+// Show signup form
+signupBtn.addEventListener("click", () => {
+  signupBtn.classList.add("active");
+  loginBtn.classList.remove("active");
+  signupForm.classList.add("active");
+  loginForm.classList.remove("active");
 });
