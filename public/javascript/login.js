@@ -1,9 +1,9 @@
-
 //Sign up and login buttons and form handles (Toggles)
 const loginBtn = document.getElementById("login-btn");
 const signupBtn = document.getElementById("signup-btn");
 const loginForm = document.getElementById("login-form");
 const signupForm = document.getElementById("signup-form");
+const submitInfo = document.getElementById("submit-info");
 
 // Show login form
 loginBtn.addEventListener("click", () => {

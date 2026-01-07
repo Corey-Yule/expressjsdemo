@@ -3,55 +3,37 @@ const router = express.Router();
 const bcrypt = require("bcryptjs")
 const supabase = require("../middleware/supabase.js")
 
-async function insertUser(data) {
-  const { err } = await supabase
-    .from("Users")
-    .insert(data)
-}
-
-async function getUser(email) {
-  const { data, err } = await supabase
-    .from("Users")
-    .select()
-    .eq("email_addr", email)
-
-  return data
-}
-
-
 router.get("/", (req, res) => {
   res.render("login/index");
 });
 
 router.post("/loginAccount", (req, res) => {
-  getUser(req.body.email_addr).then(function(result) {
-    if (!Object.hasOwn(result, 0)) { return }
-
-    bcrypt.compare(req.body.password, result[0].password, (err, equal) => {
-      if (err) {
-        throw err
-      } else {
-        equal ? console.log("correct") : console.log("incorrect")
-      }
-    })
-  })
+  supabase.auth.signInWithPassword({
+    email: req.body.email_addr,
+    password: req.body.password,
+})
 
   res.render("index")
 })
 
 router.post("/createAccount", (req, res) => {
-  getUser(req.body.email_addr).then(function(result) {
-    if (Object.hasOwn(result, 0)) { return }
-
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
-      if (err) {
-        throw err;
-      } else {
-        req.body.password = hash
-        insertUser(req.body)
-      }
-    })
+  supabase.auth.signUp({
+    email: req.body.email_addr,
+    password: req.body.password,
   })
+  .then(({ data, error }) => {
+    if (error) {
+      console.error("Signup error:", error);
+      // Handle error
+    } else {
+      console.log("Signup successful:", data);
+      // Handle success
+    }
+  })
+  .catch((err) => {
+    console.error("Unexpected error:", err);
+    // Handles special poeople
+  });
 
   res.render("index")
 })
