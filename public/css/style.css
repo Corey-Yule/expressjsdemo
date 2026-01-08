@@ -1,0 +1,153 @@
+body {
+      font-family: 'Inter', 'Helvetica Neue', sans-serif;
+      overflow: hidden;
+      background-color: #050505;
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .settings-container {
+      position: relative;
+      z-index: 10;
+      background: rgba(70, 230, 230, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .settings-container h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .settings-section {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .settings-section:last-child {
+      border-bottom: none;
+    }
+
+    .settings-section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .setting-item {
+      margin-bottom: 15px;
+    }
+
+    .setting-item label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .setting-item input[type="text"],
+    .setting-item input[type="email"],
+    .setting-item input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      box-sizing: border-box;
+    }
+
+    .setting-item input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .setting-item button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .setting-item button:hover {
+      background: #667eea;
+    }
+
+    .setting-item button.danger {
+      background: rgba(255, 77, 77, 0.2);
+    }
+
+    .setting-item button.danger:hover {
+      background: #ff4d4d;
+    }
+
+    .success-message {
+      color: #4dff88;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .error-message {
+      color: #ff4d4d;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .info-text {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 5px;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 14px;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Custom scrollbar */
+    .settings-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .settings-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .settings-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .settings-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
