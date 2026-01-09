@@ -3,7 +3,7 @@ const router = express.Router();
 const supabase = require("../middleware/supabase.js")
 const { redirectIfAuthenticated } = require("../middleware/auth.js");
 
-router.get("/login",  redirectIfAuthenticated,(req, res) => {
+router.get("/",  redirectIfAuthenticated,(req, res) => {
   res.render("login/index", {
     activeForm: "loginForm", // Set default
     error: null,
