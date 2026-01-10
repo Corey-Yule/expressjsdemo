@@ -21,7 +21,7 @@ router.post("/signOut", async (req, res) => {
   res.clearCookie('sb-refresh-token');
 
   // Redirect to login page
-  res.redirect('login/index');
+  res.redirect("/")
 });
 
 //stuff

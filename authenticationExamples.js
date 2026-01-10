@@ -1,4 +1,4 @@
-const { authenticateUser } = require("../middleware/auth.js");
+const { authenticateUser, redirectIfAuthenticated, checkAuth } = require("../middleware/auth.js");
 //authenticateUser - Use on protected routes
 
 // Forces login, provides req.user

@@ -3,7 +3,7 @@ const router = express.Router();
 const supabase = require("../middleware/supabase.js")
 const { redirectIfAuthenticated } = require("../middleware/auth.js");
 
-router.get("/",  redirectIfAuthenticated,(req, res) => {
+router.get("/",  redirectIfAuthenticated, (req, res) => {
   res.render("login/index", {
     activeForm: "loginForm", // Set default
     error: null,
@@ -92,7 +92,8 @@ router.post("/createAccount", async (req, res) => {
       formData: req.body
     });
   }
-console.log("Signup successful:", data);
+  
+  console.log("Signup successful:", data);
   
   // set cookies for signup (auto-login after signup)
   if (data.session) {

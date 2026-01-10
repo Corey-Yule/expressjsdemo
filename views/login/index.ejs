@@ -17,6 +17,11 @@
     <!-- Login Form -->
     <form id="login-form" class="form <%= activeForm === 'loginForm' ? 'active' : '' %>" action="/login/loginAccount" method="post">
       <h1>Login</h1>
+
+      <% if (typeof error !== 'undefined' && error && activeForm == 'loginForm') { %>
+        <div class="error-message"><%= error %></div>
+      <% } %>
+
       <input type="email" id="login-email" name="email_addr" placeholder="Email" required />
       <input type="password" id="login-password" name="password" placeholder="Password" required />
       <button type="submit">Login</button>
@@ -27,12 +32,12 @@
     <form id="signup-form" name="signupForm" class="form <%= activeForm === 'signupForm' ? 'active' : '' %>" action="/login/createAccount" method="post">
       <h1>Sign Up</h1>
       <!-- Error case incase of already existing details -->
-      <% if (typeof error !== 'undefined' && error) { %>
+      <% if (typeof error !== 'undefined' && error && activeForm == 'signupForm') { %>
         <div class="error-message"><%= error %></div>
       <% } %>
 
-      <input type="text" id="username" name="username" placeholder="Username" value="<%= typeof formData !== 'undefined' && formData.username ? formData.username : '' %>" required />
-      <input type="email" id="signup-email" name="email_addr" placeholder="Email" value="<%= typeof formData !== 'undefined' && formData.email_addr ? formData.email_addr : '' %>" required />
+      <input type="text" id="username" name="username" placeholder="Username" value="<%= typeof formData !== 'undefined' && activeForm == 'signupForm' && formData.username ? formData.username : '' %>" required />
+      <input type="email" id="signup-email" name="email_addr" placeholder="Email" value="<%= typeof formData !== 'undefined' && activeForm == 'signupForm' && formData.email_addr ? formData.email_addr : '' %>" required />
       <input type="password" id="signup-password" name="password" placeholder="Password" required />
       <button type="submit" id="submit-info">Sign Up</button>
     </form>

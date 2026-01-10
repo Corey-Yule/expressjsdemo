@@ -13,43 +13,37 @@ async function authenticateUser(req, res, next) {
   try {
     // Verify the access token and get user
     const { data: { user }, error } = await supabase.auth.getUser(accessToken);
-    
-    if (error) {
-      // Access token expired, try to refresh
-      if (refreshToken) {
-        const { data, error: refreshError } = await supabase.auth.refreshSession({
-          refresh_token: refreshToken
-        });
-        
-        if (refreshError) {
-          // Refresh failed, redirect to login
-          res.clearCookie('sb-access-token');
-          res.clearCookie('sb-refresh-token');
-          return res.redirect('/login');
-        }
-        
-        // Update cookies with new tokens
-        res.cookie('sb-access-token', data.session.access_token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
-          maxAge: 7 * 24 * 60 * 60 * 1000
-        });
-        
-        res.cookie('sb-refresh-token', data.session.refresh_token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
-          maxAge: 7 * 24 * 60 * 60 * 1000
-        });
-        
-        req.user = data.user;
-      } else {
+  
+    if (!error) { req.user = user }
+    if (error && !refreshToken) { return res.redirect('/login') }
+    if (error && refreshToken) {
+      const { data, error: refreshError } = await supabase.auth.refreshSession({
+        refresh_token: refreshToken
+      });
+      
+      if (refreshError) {
+        // Refresh failed, redirect to login
+        res.clearCookie('sb-access-token');
+        res.clearCookie('sb-refresh-token');
         return res.redirect('/login');
       }
-    } else {
-      // Token is valid, attach user to request
-      req.user = user;
+      
+      // Update cookies with new tokens
+      res.cookie('sb-access-token', data.session.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+      });
+      
+      res.cookie('sb-refresh-token', data.session.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+      });
+      
+      req.user = data.user;
     }
     
     next(); // Continue to the route
@@ -65,22 +59,17 @@ async function authenticateUser(req, res, next) {
 async function redirectIfAuthenticated(req, res, next) {
   const accessToken = req.cookies['sb-access-token'];
   
-  if (!accessToken) {
-    return next(); // Not authenticated, continue to login page
-  }
+  if (!accessToken) { return next(); } // Not authenticated, continue to login page
   
   try {
     const { data: { user }, error } = await supabase.auth.getUser(accessToken);
     
-    if (user && !error) {
-      // User is authenticated, redirect away from login page
-      return res.redirect('/');
-    }
-    
-    next(); // Token invalid, continue to login
+    if (user && !error) { return res.redirect('/'); } // User is authenticated, redirect away from login page
   } catch (error) {
-    next();
+    console.log("error redirecting, continuing to login page")
   }
+
+  next(); // Token invalid or error, continue to login
 }
 
 async function checkAuth(req) {
@@ -109,15 +98,12 @@ async function checkAuth(req) {
       }
     }
     
-    if (error || !user) {
-      return { authenticated: false, user: null };
-    }
-    
-    return { authenticated: true, user };
-    
+    if (user && !error) { return { authenticated: true, user: user }; }
   } catch (error) {
-    return { authenticated: false, user: null };
+    console.log("error with middleware unable to authenticate")
   }
+
+  return { authenticated: false, user: null };
 }
 
 module.exports = { authenticateUser, redirectIfAuthenticated, checkAuth }; //These three functions are pretty self explanitory grabbed from supabase's express.js docs
