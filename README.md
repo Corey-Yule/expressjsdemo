@@ -11,4 +11,3 @@ Optional possible fixes depending on certain errors that may occur
 
 This runs the development of the code:
 1. npm run dev
-2. Test
