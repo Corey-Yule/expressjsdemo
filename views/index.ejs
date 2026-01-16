@@ -9,70 +9,68 @@
 
   <div id="Background">
     <body>
-      <p>Testing</p>
-
-      <!--Routing Test-->
-      <div id="routingTestDiv">
-        <a href="/test">
-          <button>
-            Routing Test 
-          </button>
-        </a>     
-      </div>
-
-      <!--Htmx Test-->
-      <div id="htmxTestDiv">
-        <button hx-get="/test/htmx"
-                hx-trigger="click"
-                hx-target="#htmxTestDiv"
-                hx-swap="outerHTML">
-          htmxTest
-        </button>     
-      </div>
-
-      <!--Position Test-->
-      <div id="Position-Test">
-        <p id="para-text">
-          Testing Actual Features
-        </p>
-      </div>
-
-      <!--Background Test-->
-      <div>
-        <a href="/background">
-        <button>
-          Background Test
-        </button>
-      </a>
-      </div>
-
-      <!--Login Test-->
-      <div>
-        <a href="/login">
-        <button>
-          Login Page
-        </button>
-      </a>
-      </div>
-      
-      <!--database Test-->
-      <div id="databaseTest">
-        <button hx-get="/database"
-                hx-trigger="click">
-          databaseTest
-        </button>
-      </div>
-
-      <!--Account Settings Test-->
-      <div>
+      <nav class="navBar" id="Nav">
         <a href="/account">
-        <button>
-          Account Settings
-        </button>
-      </a>
+          <button class="nButton">
+            Account Settings
+          </button>
+        </a>
+        <a href="/login" class="loginButton">
+          <button class="nButton">
+            Login Page
+          </button>
+        </a>
+      </nav>
+
+      <div class="content">
+        <p>Testing</p>
+
+        <!--Routing Test-->
+        <div id="routingTestDiv">
+          <a href="/test">
+            <button>
+              Routing Test 
+            </button>
+          </a>     
+        </div>
+
+        <!--Htmx Test-->
+        <div id="htmxTestDiv">
+          <button hx-get="/test/htmx"
+                  hx-trigger="click"
+                  hx-target="#htmxTestDiv"
+                  hx-swap="outerHTML">
+            htmxTest
+          </button>     
+        </div>
+
+        <!--Position Test-->
+        <div id="Position-Test">
+          <p id="para-text">
+            Testing Actual Features
+          </p>
+        </div>
+
+        <!--Background Test-->
+        <div>
+          <a href="/background">
+          <button>
+            Background Test
+          </button>
+        </a>
+        </div>
+        
+        <!--database Test-->
+        <div id="databaseTest">
+          <button hx-get="/database"
+                  hx-trigger="click">
+            databaseTest
+          </button>
+        </div>
       </div>
       <!--JavaScript-->
       <script src='/javascript/htmx.min.js'></script>
+      <script src="../middleware/auth.js"></script>
     </body>
   </div>
 </html>

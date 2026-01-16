@@ -1,4 +1,4 @@
-//Variablesw
+//Variables
 const loginBtn = document.getElementById('login-btn');
 const signupBtn = document.getElementById('signup-btn');
 const loginForm = document.getElementById('login-form');
