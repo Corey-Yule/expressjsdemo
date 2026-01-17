@@ -4,6 +4,9 @@ export function createBackground(options = {}) {
     const sphereCount = options.sphereCount || 3;
     const particleCount = options.particleCount || 80;
 
+    //appends the css link tag to the head of the page
+    appendCss();
+
     // Create main background wrapper
     const background = document.createElement('div');
     background.className = 'gradient-background';
@@ -35,6 +38,17 @@ export function createBackground(options = {}) {
 
     // Mouse interaction
     initMouseParticles(particlesContainer);
+}
+
+function appendCss() {
+  const head = document.head;
+  var link = document.createElement('link')
+
+  link.type = 'text/css'
+  link.rel = 'stylesheet'
+  link.href = '/css/background.css'
+
+  head.appendChild(link)
 }
 
 // Particle functions
