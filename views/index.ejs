@@ -8,52 +8,50 @@
   </head>
 
   <body>
-    <div id='Container'>
-      <div class="content">
-        <p>Testing</p>
+    <div class="content">
+      <p>Testing</p>
 
-        <!--Routing Test-->
-        <div id="routingTestDiv">
-          <a href="/test">
-            <button>
-              Routing Test 
-            </button>
-          </a>     
-        </div>
-
-        <!--Htmx Test-->
-        <div id="htmxTestDiv">
-          <button hx-get="/test/htmx"
-                  hx-trigger="click"
-                  hx-target="#htmxTestDiv"
-                  hx-swap="outerHTML">
-            htmxTest
-          </button>     
-        </div>
-
-        <!--Position Test-->
-        <div id="Position-Test">
-          <p id="para-text">
-            Testing Actual Features
-          </p>
-        </div>
-
-        <!--Background Test-->
-        <div>
-          <a href="/background">
+      <!--Routing Test-->
+      <div id="routingTestDiv">
+        <a href="/test">
           <button>
-            Background Test
+            Routing Test 
           </button>
-        </a>
-        </div>
-        
-        <!--database Test-->
-        <div id="databaseTest">
-          <button hx-get="/database"
-                  hx-trigger="click">
-            databaseTest
-          </button>
-        </div>
+        </a>     
+      </div>
+
+      <!--Htmx Test-->
+      <div id="htmxTestDiv">
+        <button hx-get="/test/htmx"
+                hx-trigger="click"
+                hx-target="#htmxTestDiv"
+                hx-swap="outerHTML">
+          htmxTest
+        </button>     
+      </div>
+
+      <!--Position Test-->
+      <div id="Position-Test">
+        <p id="para-text">
+          Testing Actual Features
+        </p>
+      </div>
+
+      <!--Background Test-->
+      <div>
+        <a href="/background">
+        <button>
+          Background Test
+        </button>
+      </a>
+      </div>
+      
+      <!--database Test-->
+      <div id="databaseTest">
+        <button hx-get="/database"
+                hx-trigger="click">
+          databaseTest
+        </button>
       </div>
     </div>
     <!--JavaScript-->
