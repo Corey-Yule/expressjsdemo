@@ -34,23 +34,20 @@ const buttons = [{
   {
     anchor: '/login',
     anchorClass: 'loginButton',
-    text: 'Login'
+    text: 'Login Page'
   }
 
 ]
 
 export function createNavBar() {
   const container = document.body
-
-  createNav(container)
-  addCss()
-
+  const nav = createNav(container)
 
   for (const button of buttons) {
     createButton(nav, button)
   }
 
-
+  addCss()
 }
 
 function addCss() {
@@ -65,21 +62,26 @@ function addCss() {
 }
 
 function createButton(parent, options) {
-  const button = `
-    <a href="${options.anchor}" class="${options.anchorClass || ""}">
-      <button class="nbutton">
-        ${options.text}
-      </button>
-    </a> 
-  `
+  var anchor = document.createElement('a')
+  var button = document.createElement('button')
 
-  parent.innerHTML += button
+  anchor.href = options.anchor || '/'
+  anchor.className = options.anchorClass || ''
+
+  button.className = 'nButton'
+  button.innerHTML = options.text || 'button'
+
+  anchor.appendChild(button)
+  parent.appendChild(anchor)
 }
 
 function createNav(container) {
   var nav = document.createElement('nav')
   nav.class = "navbar"
   nav.id = "Nav"
+  nav.className = 'navBar'
 
   container.insertBefore(nav, container.firstChild)
+
+  return nav
 }
