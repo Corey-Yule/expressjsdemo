@@ -35,15 +35,11 @@ function addCss() {
 
 function createButton(parent, options) {
   var anchor = document.createElement('a')
-  var button = document.createElement('button')
 
-  anchor.href = options.anchor || '/'
-  anchor.className = options.anchorClass || ''
+  anchor.href = options.anchor
+  anchor.className = 'nButton'
+  anchor.innerHTML = options.text
 
-  button.className = 'nButton'
-  button.innerHTML = options.text || 'button'
-
-  anchor.appendChild(button)
   parent.appendChild(anchor)
 }
 
