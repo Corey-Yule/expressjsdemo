@@ -1,13 +1,22 @@
-const buttons = [{
-    anchor: '/account',
-    text: 'Account Settings'
+const buttons = [
+  {
+    anchor: '/',
+    image: '/Images/logo.png'
   },
+  {
+    anchor: '/about',
+    text: 'About us'
 
+  },
   {
     anchor: '/login',
     anchorClass: 'loginButton',
-    text: 'Login Page'
-  }
+    text: 'Login'
+  },
+  {
+    anchor: '/account',
+    text: 'Account Settings'
+  },
 
 ]
 
@@ -37,10 +46,25 @@ function createButton(parent, options) {
   var anchor = document.createElement('a')
 
   anchor.href = options.anchor
-  anchor.className = 'nButton'
-  anchor.innerHTML = options.text
+
+  if (options.image) {
+    anchor.className = 'nIconContainer'
+    createImage(anchor, options.image)
+  } else {
+    anchor.className = 'nButton'
+    anchor.innerHTML = options.text
+  }
 
   parent.appendChild(anchor)
+}
+
+function createImage(parent, route) {
+  var img = document.createElement('img')
+
+  img.src = '/Images/logo.png'
+  img.className = 'nIcon'
+
+  parent.appendChild(img)
 }
 
 function createNav(container) {

@@ -1,8 +1,27 @@
 .navBar {
+  display: flex;
   background-color: #111111;
   text-align: left;
   padding: 14px 16px;
-  text-decoration: none;
+}
+
+.navBar :last-child {
+  margin-left: auto;
+}
+
+.nIconContainer {
+  display: flex;
+  align-items: center;
+}
+
+.nIcon {
+  display: flex;
+  position: relative;
+
+  width: 2.1vw;
+  height: 2.1vw;
+  padding-right: 0.5vw;
+  margin-right: 1vw;
 }
 
 .nButton {

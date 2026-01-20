@@ -12,11 +12,11 @@ export function createBackground(options = {}) {
     background.className = 'gradient-background';
 
     // Add gradient spheres
-    for (let i = 1; i <= sphereCount; i++) {
-        const sphere = document.createElement('div');
-        sphere.className = `gradient-sphere sphere-${i}`;
-        background.appendChild(sphere);
-    }
+    // for (let i = 1; i <= sphereCount; i++) {
+    //     const sphere = document.createElement('div');
+    //     sphere.className = `gradient-sphere sphere-${i}`;
+    //     background.appendChild(sphere);
+    // }
 
     // Add overlays
     ['glow', 'grid-overlay', 'noise-overlay'].forEach(cls => {

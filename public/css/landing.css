@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.page-title {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+.page-title h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.slogan {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+}
+
+.slogan p {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 22px;
+  color: white;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+/* Get Started button */
+.get-started-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  padding: 14px 24px;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+/* Hover effect */
+.get-started-btn:hover {
+  background-color: #5170ff;
+  color: white;
+  transform: translateY(-2px);
+}
+
+
