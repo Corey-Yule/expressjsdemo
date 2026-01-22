@@ -1,3 +1,19 @@
+.Title {
+    position: absolute;
+    top: 80px; 
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.Title h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
 body {
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
     overflow: hidden;

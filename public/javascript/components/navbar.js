@@ -1,3 +1,5 @@
+
+
 const buttons = [
   {
     anchor: '/',
@@ -21,6 +23,14 @@ const buttons = [
 ]
 
 export function createNavBar() {
+  fetch('/auth/status')
+    .then(res => res.json())
+    .then(data => {
+      if (data.loggedIn) {
+        console.log("Worked!")
+      }
+    });
+
   const container = document.body
   const nav = createNav(container)
 
