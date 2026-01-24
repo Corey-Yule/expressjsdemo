@@ -13,7 +13,8 @@ const buttons = [
   {
     anchor: '/login',
     anchorClass: 'loginButton',
-    text: 'Login'
+    text: 'Login',
+    removeOnLogin: true,
   },
   {
     anchor: '/account',
@@ -22,24 +23,28 @@ const buttons = [
 
 ]
 
-export function createNavBar() {
-  fetch('/auth/status')
-    .then(res => res.json())
-    .then(data => {
-      if (data.loggedIn) {
-        console.log("Worked!")
-      }
-    });
-
+export async function createNavBar() {
   const container = document.body
   const nav = createNav(container)
 
-  for (const button of buttons) {
-    createButton(nav, button)
-  }
+  fetch('/auth/status')
+    .then(res => res.json())
+    .then(data => {
+      for (const button of buttons) {
+        if (data.loggedIn && button.removeOnLogin) {
+          continue
+        }
+        createButton(nav, button)
+      }
+  })
 
   addCss()
 }
+
+function getLogin() {
+  
+}
+
 
 function addCss() {
   const head = document.head;
