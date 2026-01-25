@@ -6,10 +6,10 @@ router.get("/callback", (req, res) => {
   res.redirect("/dashboard");
 });
 
-router.get("/status", (req, res) => {
-  checkAuth(req).then(({ authenticated, user }) => {
-    return authenticated ? res.json({ loggedIn: true}) : res.json({ loggedIn: false })
-  })
+router.get("/status", async (req, res) => {
+  const { authenticated, user } = await checkAuth(req)
+
+  return authenticated ? res.json({ loggedIn: true}) : res.json({ loggedIn: false })
 });
 
 module.exports = router;

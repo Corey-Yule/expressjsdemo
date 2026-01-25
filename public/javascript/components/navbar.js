@@ -1,5 +1,3 @@
-
-
 const buttons = [
   {
     anchor: '/',
@@ -26,25 +24,26 @@ const buttons = [
 export async function createNavBar() {
   const container = document.body
   const nav = createNav(container)
+  const loggedIn = await getLogin()
 
-  fetch('/auth/status')
-    .then(res => res.json())
-    .then(data => {
-      for (const button of buttons) {
-        if (data.loggedIn && button.removeOnLogin) {
-          continue
-        }
-        createButton(nav, button)
-      }
-  })
+  for (const button of buttons) {
+    if (loggedIn && button.removeOnLogin) {
+      continue
+    }
+
+    createButton(nav, button)
+  }
 
   addCss()
 }
 
 function getLogin() {
-  
+  return fetch('/auth/status')
+    .then(res => res.json())
+    .then(data => {
+      return data.loggedIn
+  })
 }
-
 
 function addCss() {
   const head = document.head;
@@ -92,31 +91,3 @@ function createNav(container) {
 
   return nav
 }
-
-// temporarily commented to work on the generation of the nav bar
-//
-// middleware/authContext.js
-// const { checkAuth } = require();
-//
-// module.exports = async function authContext(req, res, next) {
-//   const auth = await checkAuth(req);
-//
-//   res.locals.authenticated = auth.authenticated;
-//   res.locals.user = auth.user;
-//
-//   if (auth.newTokens) {
-//     res.cookie('sb-access-token', auth.newTokens.access_token, {
-//       httpOnly: true,
-//       sameSite: 'lax',
-//       secure: process.env.NODE_ENV === 'production'
-//     });
-//
-//     res.cookie('sb-refresh-token', auth.newTokens.refresh_token, {
-//       httpOnly: true,
-//       sameSite: 'lax',
-//       secure: process.env.NODE_ENV === 'production'
-//     });
-//   }
-//
-//   next();
-// };
