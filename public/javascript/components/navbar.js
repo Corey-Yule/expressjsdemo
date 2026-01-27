@@ -4,19 +4,32 @@ const buttons = [
     image: '/Images/logo.png'
   },
   {
-    anchor: '/about',
+    anchor: '/aboutUs',
     text: 'About us'
 
+  },
+  {
+    anchor: '/missions',
+    text: 'Missions'
+  },
+  {
+    anchor: '/progress',
+    text: 'Progress'
+  },
+  {
+    anchor: '/test',
+    text: 'Testing Ground'
+  },
+  {
+    anchor: '/account',
+    text: 'Account Settings',
+    class: 'settingsButton'
   },
   {
     anchor: '/login',
     anchorClass: 'loginButton',
     text: 'Login',
     removeOnLogin: true,
-  },
-  {
-    anchor: '/account',
-    text: 'Account Settings'
   },
 ]
 

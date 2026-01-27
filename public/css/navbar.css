@@ -5,7 +5,12 @@
   padding: 14px 16px;
 }
 
-.navBar :last-child {
+/* .navBar :last-child {
+  margin-left: auto;
+}
+*/
+
+.navBar :nth-child(5) {
   margin-left: auto;
 }
 

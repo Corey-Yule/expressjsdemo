@@ -4,6 +4,7 @@ body {
       background-color: #1a1c20;
       color: white;
       height: 100vh;
+      z-index: 100;
 }
 
 .content {
@@ -14,7 +15,6 @@ body {
 }
 
 .settings-container {
-  /**/
   position: relative;
   margin: auto;
   z-index: 10;

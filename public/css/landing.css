@@ -4,12 +4,14 @@
   text-align: center;
   margin-top: 2.5%;
   margin-bottom: 20%;
+  z-index: 50;
 }
 
 .page-title h1 {
   font-family: 'Press Start 2P', monospace;
   font-size: 2rem;
   font-weight: 700;
+  z-index: 50;
 }
 
 .slogan {
@@ -18,6 +20,7 @@
   top: 50%;
   left: 40px;
   transform: translateY(-50%);
+  z-index: 50;
 }
 
 .slogan p {
@@ -27,6 +30,20 @@
   color: white;
   letter-spacing: 2px;
   margin-bottom: 30px;
+  z-index: 50;
+}
+
+.svg {
+  width: 100%;
+  height: 100vh;
+}
+
+.rectangle {
+  fill: white;
+  height: 100%; /* Increase height to ensure it covers the bottom of the screen */
+  width: 100vw;
+  transform: skewY(5deg); /* Negative degrees tilts it up towards the right */
+  transform-origin: left;
 }
 
 /* Get Started button */
@@ -40,6 +57,7 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
+  z-index: 50;
 }
 
 /* Hover effect */
@@ -47,6 +65,7 @@
   background-color: #5170ff;
   color: white;
   transform: translateY(-2px);
+  z-index: 50;
 }
 
 

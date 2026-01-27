@@ -20,13 +20,21 @@
       <p> Commit to your health now!</p>
       <a href='/login' class="get-started-btn">Get Started</a>
     </div>
+
+    <!--White Rectangle-->
+    <div class="rectangleContainer">
+      <svg class="svg">
+        <rect class="rectangle"/>
+      </svg>
+    </div>
     
     <!--JavaScript-->
     <script src='/javascript/htmx.min.js'></script>
     <script type="module">
-      import { generateNavBar } from '/javascript/components/controller.js'
-
-      generateNavBar()
+      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+           
+      generateNavBar();
+      generateBackground();
     </script>
   </body>
 </html>

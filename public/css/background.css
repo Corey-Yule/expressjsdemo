@@ -1,7 +1,14 @@
 
+.gradient-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
 /* The grid for the pixels */
 .pixel-grid {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-color: var(--bg);
   background-image:
@@ -14,7 +21,7 @@
 
 /* Pixels sparkle */
 #pixels {
-  position: absolute;
+  position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -25,7 +32,7 @@
 
 /* particles that follow cursor */
 .particles-container {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 4;
   pointer-events: none;

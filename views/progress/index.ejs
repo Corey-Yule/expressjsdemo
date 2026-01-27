@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/progress.css">
+  <title>Progress</title>
+</head>
+<body>
+    <div class="page-title">
+      <h1>GitHealthy</h1>
+    </div>
+    <div class="progress-container">
+
+        <div class="progress-bars">
+            <div class="progress-bar" data-metric="kcal"></div>
+            <div class="progress-bar" data-metric="steps"></div>
+            <div class="progress-bar" data-metric="sleep"></div>
+            <div class="progress-bar" data-metric="water"></div>
+            <div class="progress-bar" data-metric="weight"></div>
+            <div class="progress-bar" data-metric="stress"></div>
+        </div>
+    </div>
+    <!--End of Content-->
+
+     <!--JavaScript-->
+    <script src='/javascript/htmx.min.js'></script>
+    <script type="module">
+      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+      //generateBackground();
+      generateNavBar()
+    </script>
+</body>
+</html>

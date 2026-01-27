@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/missions.css">
+  </head>
+   <body>
+    <!--Title-->
+    <div class="page-title">
+      <h1>GitHealthy</h1>
+    </div>
+    <!--Content-->
+     <div class="main-content">
+
+      <h2 class="mission-title">DAILY</h2>
+      <ul class="mission-list">
+        <li class="mission-card done">
+          <span class="mission-icon">✓</span>
+          <span class="mission-text">Walk 6000 steps</span>
+        </li>
+        <li class="mission-card not-done">
+          <span class="mission-icon">✕</span>
+          <span class="mission-text">Drink 2L of water</span>
+        </li>
+        <li class="mission-card not-done">
+          <span class="mission-icon">✕</span>
+          <span class="mission-text">Score 80+ stress</span>
+        </li>
+      </ul>
+      <h2 class="mission-title">Weekly</h2>
+      <ul class="mission-list">
+        <li class="mission-card done">
+          <span class="mission-icon">✓</span>
+          <span class="mission-text">Get 3000 steps daily</span>
+        </li>
+        <li class="mission-card done">
+          <span class="mission-icon">✕</span>
+          <span class="mission-text">Drink 2L of water per day</span>
+        </li>
+        <li class="mission-card not-done">
+          <span class="mission-icon">✕</span>
+          <span class="mission-text">Average 80+ stress</span>
+        </li>
+      </ul>
+
+   
+
+     <!--JavaScript-->
+    <script src='/javascript/htmx.min.js'></script>
+    <script type="module">
+      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+      //generateBackground();
+      generateNavBar()
+    </script>
+  </body>
+</html>
