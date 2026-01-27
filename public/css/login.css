@@ -27,7 +27,7 @@ body {
 
 /* Form container above background */
 .form-container {
-    position: relative;
+    position: center;
     z-index: 10; /* Higher than background */
     background: rgba(70, 230, 230, 0.05);
     padding: 40px;

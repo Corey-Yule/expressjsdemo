@@ -14,10 +14,13 @@ body {
 }
 
 .settings-container {
+  /**/
   position: relative;
+  margin: auto;
   z-index: 10;
   background: rgba(70, 230, 230, 0.05);
   padding: 40px;
+  margin-top: 5%;
   border-radius: 15px;
   width: 500px;
   max-height: 80vh;
