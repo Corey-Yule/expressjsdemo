@@ -18,7 +18,6 @@ const buttons = [
     anchor: '/account',
     text: 'Account Settings'
   },
-
 ]
 
 export async function createNavBar() {

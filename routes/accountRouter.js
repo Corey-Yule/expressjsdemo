@@ -14,7 +14,7 @@ router.get("/", authenticateUser, (req, res) => {
   });
 });
 
-router.post("/signOut", async (req, res) => {
+router.post("/logout", async (req, res) => {
   // Clear the authentication cookies
   res.clearCookie('sb-access-token');
   res.clearCookie('sb-refresh-token');
