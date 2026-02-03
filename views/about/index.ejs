@@ -1,17 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/css/style.css">
-  <title>About Us</title>
-</head>
-<body>
-    <!--Scripts-->
-    <script type="module">
-      import { generateBackground } from '/javascript/components/controller.js';
-      
-      generateBackground();
-    </script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="css/about.css">
+        <title>About Us</title>
+    </head>
+    <body>
+        <div class="heading">
+            <h1>About us</h1>
+        </div>
+        <div class="body">
+            <!-- Mission Section -->
+            <section>
+                <h2>Our Mission</h2>
+                <p>We are dedicated to empowering people to achieve their health and fitness goals through personalised, data-driven guidance. By using real biomarker data, we turn complex health insights into simple, actionable steps that help users live stronger, healthier lives.</p>
+                <p>Founded on principles of integrity, innovation, and customer success, we strive to make a positive impact in everything we undertake. Our team works tirelessly to deliver exceptional value and build lasting partnerships with our clients.</p>
+            </section>
+            <!-- Stats Section -->
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>3+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-box">
+                    <h3><%= users %></h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-box">
+                    <h3>6</h3>
+                    <p>Team Members</p>
+                </div>
+            </div>
+            <!-- Our Story Section -->
+            <section>
+                <h2>Our Story</h2>
+                <p>We started our journey in 2025 as 6 developers who had never previously known eachother.  We decided to put our minds and strengths together to develop what you know today as "Git-Healthy". Our journey has been marked by continuous learning, adaptation, and an unwavering commitment to our core values.</p>
+                <p>Through challenges and triumphs, we've remained focused on what matters most: delivering exceptional results and building an empowering fitness app!</p>
+            </section>
+            <!-- Values Section -->
+            <section>
+                <h2>Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <h4>Innovation</h4>
+                        <p>We embrace creativity and cutting-edge technology to develop solutions that push boundaries and exceed expectations.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Integrity</h4>
+                        <p>Honesty and transparency guide every decision we make, building trust with our clients and team members.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Excellence</h4>
+                        <p>We pursue perfection in everything we do, continuously improving and raising the bar for quality.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Collaboration</h4>
+                        <p>We believe in the power of teamwork, fostering an environment where diverse perspectives create better outcomes.</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Team Section -->
+            <section>
+                <h2>Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>Corey Yule</h4>
+                        <p>Full Stack Developer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://previews.123rf.com/images/vlue/vlue1008/vlue100800202/7618514-a-generic-white-cauasian-young-adult-male-smiling-down-at-the-camera-with-a-pleasant-look-on-his.jpg" alt="Team Member">
+                        <h4>James Gray</h4>
+                        <p>Full Stack Developer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="" alt="Team Member">
+                        <h4>Ben Sharpe</h4>
+                        <p>Scrum Master + Front-End Dev</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>Louis Chudleigh-Lyle</h4>
+                        <p>Back-End Developer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>Aron McCathie</h4>
+                        <p>Front-End Developer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>Nafiz Rahman</h4>
+                        <p>Front-End Developer</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Contact Section -->
+            <section>
+                <h2>Get In Touch</h2>
+                <p>We'd love to hear from you! Whether you have a question about our services, need support, or just want to say hello, our team is ready to answer all your questions.</p>
+                <p>Reach out to us at <strong>githealthy.help@gmail.com</strong></p>
+            </section>
+        </div>
+        <!--Scripts-->
+        <script type="module">
+            import { generateBackground, generateNavBar } from '/javascript/components/controller.js';
+            generateBackground();
+            generateNavBar();
+        </script>
+    </body>
 </html>

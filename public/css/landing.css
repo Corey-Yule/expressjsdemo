@@ -62,7 +62,7 @@
 
 /* Hover effect */
 .get-started-btn:hover {
-  background-color: #5170ff;
+  background-color: #0081DC;
   color: white;
   transform: translateY(-2px);
   z-index: 50;

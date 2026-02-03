@@ -1,55 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
   margin: 0;
   min-height: 100vh;
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Press Start 2P', monospace;
 }
-
-/* push content down*/
-.page-title {
-  margin-top: 120px;
-  text-align: center;
-}
-
-.page-title h1 {
-  margin: 0 0 30px 0;
-  font-size: 42px;
-}
-
-/* Main content container */
-.progress-container {
+.progress-page {
   min-height: 100vh;
-  width: 100%;
+  display: flex;
   justify-content: center;
-  align-items: center;
-
+  align-items: flex-start;
   background: #101417;
 }
 
-/* Inner content wrapper */
-.progress {
-  width: 100%;
-  max-width: 520px;
+.progress-panel {
+  margin-top: 90px; /* pushes the card stack down like the mockup */
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
+}
+
+/* ===== Tabs: Daily / Weekly / Monthly ===== */
+
+.period-tabs {
+  display: inline-flex;
+  background: #050608;
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+.period-tabs .tab {
+  border: none;
+  background: transparent;
+  color: #8b90b5;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.period-tabs .tab.active {
+  background: #1b4cff;
+  color: #ffffff;
+}
+
+/* ===== Bars stack ===== */
+
+.progress-container {
+  width: 100%;
 }
 
 .progress-bars {
-  width: 100%;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
 
-/* ===== Individual Bar / Card ===== */
+/* ===== Individual bar ===== */
 
 .progress-bar {
   width: 420px;
   height: 64px;
-  background: linear-gradient(180deg, #0b0b0b, #000);
-  border-radius: 14px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-  border: 2px solid rgba(255,255,255,0.04);
+  background: #050608;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 22px;
 }
+
+/* Icon + text inside each bar */
+
+.metric-icon {
+  font-size: 26px;
+  width: 32px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.metric-main {
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+}
+
+
