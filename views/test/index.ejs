@@ -4,34 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/test.css" rel="stylesheet">
   </head>
-  <body>
-    <h3>Friends</h3>
-    <ul>
+ <body>
+  <div class="friends-container">
+    <h2>Friends</h2>
+    <ul class="list">
       <% for (const friend of friends) { %>
-        <li>
-          <%= friend.user == username ? friend.friend : friend.user %>
+        <li class="list-item">
+          <span>
+            <%= friend.user == username ? friend.friend : friend.user %>
+          </span>
         </li>
       <% } %>
     </ul>
 
-    <h3>Requests</h3>
-    <ul>
+    <h2>Requests</h2>
+    <ul class="list">
       <% for (const request of requests) { %>
-        <li>
-          <%= request.user %>
-          <form action="/test/acceptRequest" method="post"><button type="submit" name="username" value="<%= request.user %>" >Accept</button></form>
-          <form action="/test/denyRequest" method="post"><button type="submit" name="username" value="<%= request.user %>" >Deny</button></form>
+        <li class="list-item actions">
+          <span><%= request.user %></span>
+
+          <form action="/test/acceptRequest" method="post">
+            <button class="btn accept" type="submit" name="username" value="<%= request.user %>">Accept</button>
+          </form>
+
+          <form action="/test/denyRequest" method="post">
+            <button class="btn deny" type="submit" name="username" value="<%= request.user %>">Deny</button>
+          </form>
         </li>
       <% } %>
     </ul>
 
-    <form action="/test/addFriend" method="post">
-      <input type="text" name="username" required />
-      <button type="submit">Submit</button>
+    <form class="add-friend" action="/test/addFriend" method="post">
+      <input type="text" name="username" placeholder="Add friend by username" required />
+      <button class="btn primary" type="submit">Add</button>
     </form>
-  </body>
+  </div>
+</body>
+
 
   <script type="module">
     import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
