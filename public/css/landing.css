@@ -33,17 +33,23 @@
   z-index: 50;
 }
 
-.svg {
-  width: 100%;
-  height: 100vh;
+.rectangleContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 140vh; /* controls how much it comes up (BEN)*/
+  pointer-events: none;
+  z-index: -3;
 }
 
-.rectangle {
+.svg {
+  width: 100%;
+  height: 100%;
+}
+
+.diagonal {
   fill: white;
-  height: 100%; /* Increase height to ensure it covers the bottom of the screen */
-  width: 100vw;
-  transform: skewY(5deg); /* Negative degrees tilts it up towards the right */
-  transform-origin: left;
 }
 
 /* Get Started button */

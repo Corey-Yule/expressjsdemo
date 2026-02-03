@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .navBar {
- 
   display: flex;
   align-items: center;
   background-color: #111111;
   text-align: left;
   padding: 14px 16px;
+  z-index: 100;
 }
 
 /* .navBar :last-child {
@@ -21,6 +21,7 @@
 .nIconContainer {
   display: flex;
   align-items: center;
+  z-index: 100;
 }
 
 .nIcon {
