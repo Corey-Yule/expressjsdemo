@@ -1,6 +1,22 @@
 const supabase = require("./supabase.js");
 //Supabase Docs
 
+async function getSelf(req) {
+  const accessToken = req.cookies['sb-access-token']
+
+  if (!accessToken) { return null }
+
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser(accessToken);
+
+    return user.user_metadata.username ? user.user_metadata.username : null
+  } catch (error) {
+    console.error("middleware issue")
+
+    return 
+  }
+}
+
 async function authenticateUser(req, res, next) {
   const accessToken = req.cookies['sb-access-token'];
   const refreshToken = req.cookies['sb-refresh-token'];
@@ -106,4 +122,4 @@ async function checkAuth(req) {
   return { authenticated: false, user: null };
 }
 
-module.exports = { authenticateUser, redirectIfAuthenticated, checkAuth }; //These three functions are pretty self explanitory grabbed from supabase's express.js docs
+module.exports = { getSelf, authenticateUser, redirectIfAuthenticated, checkAuth }; //These three functions are pretty self explanitory grabbed from supabase's express.js docs

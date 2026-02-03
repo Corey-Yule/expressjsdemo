@@ -7,8 +7,25 @@
     <link href="/css/style.css" rel="stylesheet">
   </head>
   <body>
-    <p>Routed</p>
-    <a href="/"><button>Go Back</button></a>
+    <h3>Friends</h3>
+    <ul>
+      <% for (const friend of friends) { %>
+        <li>
+          <%= friend.user == username ? friend.friend : friend.user %>
+        </li>
+      <% } %>
+    </ul>
+
+    <h3>Requests</h3>
+    <ul>
+      <% for (const request of requests) { %>
+        <li>
+          <%= request.user %>
+          <form action="/test/acceptRequest" method="post"><button type="submit" name="username" value="<%= request.user %>" >Accept</button></form>
+          <form action="/test/denyRequest" method="post"><button type="submit" name="username" value="<%= request.user %>" >Deny</button></form>
+        </li>
+      <% } %>
+    </ul>
 
     <form action="/test/addFriend" method="post">
       <input type="text" name="username" required />
