@@ -1,7 +1,8 @@
 const buttons = [
   {
     anchor: '/',
-    image: '/Images/logo.png'
+    image: '/Images/logo.png',
+    class: 'Logo'
   },
   {
     anchor: '/aboutUs',
@@ -38,6 +39,8 @@ export async function createNavBar() {
   const nav = createNav(container)
   const loggedIn = await getLogin()
 
+  addCss()
+
   for (const button of buttons) {
     if (loggedIn && button.removeOnLogin) {
       continue
@@ -45,8 +48,6 @@ export async function createNavBar() {
 
     createButton(nav, button)
   }
-
-  addCss()
 }
 
 function getLogin() {
@@ -75,7 +76,7 @@ function createButton(parent, options) {
 
   if (options.image) {
     anchor.className = 'nIconContainer'
-    createImage(anchor, options.image)
+    createImage(anchor, options)
   } else {
     anchor.className = 'nButton'
     anchor.innerHTML = options.text
@@ -84,11 +85,11 @@ function createButton(parent, options) {
   parent.appendChild(anchor)
 }
 
-function createImage(parent, route) {
+function createImage(parent, options) {
   var img = document.createElement('img')
 
-  img.src = '/Images/logo.png'
-  img.className = 'nIcon'
+  img.src = options.image
+  img.className = options.class
 
   parent.appendChild(img)
 }

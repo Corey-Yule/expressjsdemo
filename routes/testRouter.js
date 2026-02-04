@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const { addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends } = require('../middleware/dbQuery.js')
-const { getSelf } = require('../middleware/auth.js')
+const { getUsername, redirectIfNotAuthenticated } = require('../middleware/auth.js')
 
 router.get('/', async (req, res) => {
+  redirectIfNotAuthenticated(req, res)
+
   const requests = await getFriendReqs(req)
   const friends = await getFriends(req)
-  const username = await getSelf(req)
+  const username = await getUsername(req)
 
   res.render('test/index', { requests, friends, username })
 })

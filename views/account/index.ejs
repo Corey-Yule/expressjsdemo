@@ -17,7 +17,6 @@
       <h2>Profile Information</h2>
       
       <div class="setting-item">
-        
         <label id="username"></label>
         <div id="username-message"></div>
       </div>
@@ -59,10 +58,11 @@
           <button type="submit">Logout</button>
         </form>
       </div>
-
+      <!--<p class="info-text">Warning: This action cannot be undone. All your data will be permanently deleted.</p>-->
       <div class="setting-item">
-        <button class="danger" onclick="deleteAccount()">Delete Account</button>
-        <p class="info-text">Warning: This action cannot be undone. All your data will be permanently deleted.</p>
+        <form action="/account/delete" method="POST" style="margin: 0;">
+          <button class="danger" onclick="deleteAccount()" >Delete Account</button>
+        </form>
       </div>
     </div>
   </div>

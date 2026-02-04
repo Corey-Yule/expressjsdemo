@@ -8,15 +8,21 @@
 
 /* The grid for the pixels */
 .pixel-grid {
-  position: fixed;
-  inset: 0;
-  background-color: var(--bg);
   background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
-  z-index: -1;
-  pointer-events: none;
+    repeating-linear-gradient(
+      to bottom,
+      var(--grid) 0px,
+      var(--grid) 1px,
+      transparent 1px,
+      transparent 24px
+    ),
+    repeating-linear-gradient(
+      to right,
+      var(--grid) 0px,
+      var(--grid) 1px,
+      transparent 1px,
+      transparent 24px
+    )
 }
 
 /* Pixels sparkle */
@@ -40,9 +46,14 @@
 
 
 .particle {
-  position: absolute;
-  /*border-radius: 999px;*/
-  
-  background: rgba(255, 255, 255, 0.8);
-  filter: blur(0.2px);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .particles-container {
+    contain: layout paint;
+  }
+}
+

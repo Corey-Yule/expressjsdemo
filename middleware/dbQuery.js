@@ -1,8 +1,8 @@
 const supabase = require('./supabase.js')
-const { getSelf } = require('./auth.js')
+const { getUsername } = require('./auth.js')
 
 async function getFriends(req) {
-  const user = await getSelf(req)
+  const user = await getUsername(req)
 
   if (!user) { return }
 
@@ -14,12 +14,12 @@ async function getFriends(req) {
 
   if (error) { throw error }
 
-  return data
+  return data 
 }
 
 async function acceptFriendReq(req) {
   const friend = await getUser(req.body.username)
-  const user = await getSelf(req)
+  const user = await getUsername(req)
 
   if (!friend || !user) { return }
 
@@ -33,7 +33,7 @@ async function acceptFriendReq(req) {
 
 async function denyFriendReq(req) {
   const friend = await getUser(req.body.username)
-  const user = await getSelf(req)
+  const user = await getUsername(req)
 
   if (!friend || !user) { return }
 
@@ -46,7 +46,7 @@ async function denyFriendReq(req) {
 }
 
 async function getFriendReqs(req) {
-  const user = await getSelf(req)
+  const user = await getUsername(req)
 
   const { data, error } = await supabase
     .from('friends')
@@ -61,7 +61,7 @@ async function getFriendReqs(req) {
 
 async function addFriend(req) {
   const friend = await getUser(req.body.username)
-  const user = await getSelf(req)
+  const user = await getUsername(req)
   const curFriends = await areFriends(user, friend)
 
   if (!friend || !user) { return }

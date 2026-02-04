@@ -1,7 +1,7 @@
 const supabase = require("./supabase.js");
 //Supabase Docs
 
-async function getSelf(req) {
+async function getUsername(req) {
   const accessToken = req.cookies['sb-access-token']
 
   if (!accessToken) { return null }
@@ -11,10 +11,32 @@ async function getSelf(req) {
 
     return user.user_metadata.username ? user.user_metadata.username : null
   } catch (error) {
-    console.error("middleware issue")
+    console.error("middleware issue or not logged in")
 
     return 
   }
+}
+
+async function getUID(req) {
+  const accessToken = req.cookies['sb-access-token']
+
+  if (!accessToken) { return null }
+
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser(accessToken);
+    
+    return user.user_metadata.sub
+  } catch (error) {
+    console.error("middleware issue or not logged in")
+
+    return 
+  }
+}
+
+async function redirectIfNotAuthenticated(req, res) {
+  const accessToken = req.cookies['sb-access-token']
+
+  if (!accessToken) { res.redirect('/') }
 }
 
 async function authenticateUser(req, res, next) {
@@ -122,4 +144,4 @@ async function checkAuth(req) {
   return { authenticated: false, user: null };
 }
 
-module.exports = { getSelf, authenticateUser, redirectIfAuthenticated, checkAuth }; //These three functions are pretty self explanitory grabbed from supabase's express.js docs
+module.exports = { getUsername, authenticateUser, redirectIfAuthenticated, checkAuth, redirectIfNotAuthenticated, getUID }; //These three functions are pretty self explanitory grabbed from supabase's express.js docs

@@ -9,6 +9,13 @@
   z-index: 100;
 }
 
+.Logo {
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  padding-block: 0;
+}
+
 /* .navBar :last-child {
   margin-left: auto;
 }
@@ -93,3 +100,58 @@
   color: #fff;
   box-shadow: 0 4px 14px rgba(255, 77, 77, 0.45);
 }
+
+
+/* ===== Mobile & Small Screens ===== */
+@media (max-width: 768px) {
+  .navBar {
+    flex-wrap: wrap;
+    padding: 10px 12px;
+  }
+
+  .Logo {
+    width: 64px;
+    height: 64px;
+  }
+
+  .nIcon {
+    width: 6vh;
+    height: 6vh;
+    margin-right: 0.5vw;
+  }
+
+  .nButton {
+    font-size: 8px;
+    padding: 8px 12px;
+    margin-right: 6px;
+  }
+
+  .nIconContainer {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+/* ===== Very Small Screens (Phones) ===== */
+@media (max-width: 480px) {
+  .navBar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .Logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .nButton {
+    font-size: 7px;
+    padding: 6px 10px;
+  }
+
+  .nIcon {
+    width: 5vh;
+    height: 5vh;
+  }
+}
+
