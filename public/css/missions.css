@@ -2,7 +2,7 @@
 
 
 
-
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 =======
 body {
   margin: 0;
@@ -12,7 +12,7 @@ body {
 }
 >>>>>>> d992588884fe13fa525c8f703bf6954d557b198d
 
-/* push content down */
+
 .page-title {
   margin-top: 100px;
   text-align: center;
@@ -29,6 +29,7 @@ body {
   max-width: 760px;
   margin: 0 auto;
   padding: 0 20px 60px;
+  
 }
 
 /* section headers */
@@ -36,6 +37,7 @@ body {
   font-size: 18px;     
   letter-spacing: 2px;
   margin: 28px 0 14px;
+  font-family: 'Press Start 2P', monospace;
 }
 
 /* list reset */
