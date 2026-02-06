@@ -29,7 +29,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    animation: fadeInDown 1s ease-out;
+    animation: fadeInDown ease-out;
 }
 
 .heading h1::after {
@@ -52,7 +52,7 @@ body {
     padding: 60px;
     position: relative;
     z-index: 10;
-    animation: fadeInUp 1s ease-out;
+    animation: fadeInUp ease-out;
 }
 
 /* Content Sections */
