@@ -1,10 +1,12 @@
 body {
-      font-family: 'Inter', 'Helvetica Neue', sans-serif;
-      overflow: hidden;
-      background-color: #1a1c20;
-      color: white;
-      height: 100vh;
-      z-index: 100;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  overflow: hidden;
+  background-color: #1a1c20;
+  color: white;
+  height: 100vh;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
 }
 
 .content {
@@ -12,6 +14,7 @@ body {
   align-items: center;      
   text-align: center;
   height: 100vh;
+  overflow-y: auto;
 }
 
 .settings-container {
@@ -23,6 +26,7 @@ body {
   margin-top: 5%;
   border-radius: 15px;
   width: 500px;
+  max-width: 90%;
   max-height: 80vh;
   overflow-y: auto;
   backdrop-filter: blur(10px);
@@ -60,10 +64,6 @@ body {
   margin-bottom: 5px;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
-}
-
-#username {
-  
 }
 
 .setting-item input[type="text"],
@@ -138,6 +138,7 @@ body {
   cursor: pointer;
   transition: 0.3s;
   font-size: 14px;
+  z-index: 11;
 }
 
 .back-button:hover {
@@ -161,4 +162,153 @@ body {
 
 .settings-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== Tablet Screens ===== */
+@media (max-width: 768px) {
+  .settings-container {
+    width: 85%;
+    padding: 30px 25px;
+    margin-top: 8%;
+    max-height: 85vh;
+  }
+
+  .settings-container h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  .settings-section h2 {
+    font-size: 16px;
+  }
+
+  .setting-item label {
+    font-size: 13px;
+  }
+
+  .setting-item input[type="text"],
+  .setting-item input[type="email"],
+  .setting-item input[type="password"] {
+    font-size: 15px;
+    padding: 9px;
+  }
+
+  .setting-item button {
+    font-size: 13px;
+    padding: 9px 18px;
+  }
+
+  .back-button {
+    top: 15px;
+    left: 15px;
+    font-size: 13px;
+    padding: 7px 14px;
+  }
+
+  .info-text {
+    font-size: 12px;
+  }
+}
+
+/* ===== Mobile Screens ===== */
+@media (max-width: 480px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .content {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 20px;
+  }
+
+  .settings-container {
+    width: 90%;
+    padding: 25px 20px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    max-height: none;
+    border-radius: 12px;
+  }
+
+  .settings-container h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .settings-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+  }
+
+  .settings-section h2 {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .setting-item {
+    margin-bottom: 12px;
+  }
+
+  .setting-item label {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .setting-item input[type="text"],
+  .setting-item input[type="email"],
+  .setting-item input[type="password"] {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .setting-item button {
+    font-size: 12px;
+    padding: 8px 16px;
+    width: 100%;
+  }
+
+  .back-button {
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .info-text {
+    font-size: 11px;
+  }
+
+  .success-message,
+  .error-message {
+    font-size: 0.85rem;
+  }
+
+  /* Adjust scrollbar for mobile */
+  .settings-container::-webkit-scrollbar {
+    width: 5px;
+  }
+}
+
+/* ===== Very Small Screens ===== */
+@media (max-width: 360px) {
+  .settings-container {
+    width: 95%;
+    padding: 20px 15px;
+    margin-top: 90px;
+  }
+
+  .settings-container h1 {
+    font-size: 20px;
+  }
+
+  .settings-section h2 {
+    font-size: 14px;
+  }
+
+  .setting-item input[type="text"],
+  .setting-item input[type="email"],
+  .setting-item input[type="password"] {
+    font-size: 13px;
+  }
 }

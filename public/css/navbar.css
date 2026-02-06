@@ -7,6 +7,7 @@
   text-align: left;
   padding: 14px 16px;
   z-index: 100;
+  position: relative;
 }
 
 .Logo {
@@ -16,15 +17,6 @@
   padding-block: 0;
 }
 
-/* .navBar :last-child {
-  margin-left: auto;
-}
-*/
-
-.navBar :nth-child(5) {
-  margin-left: auto;
-}
-
 .nIconContainer {
   display: flex;
   align-items: center;
@@ -32,7 +24,6 @@
 }
 
 .nIcon {
-  
   display: flex;
   position: relative;
   width: 8vh;
@@ -48,20 +39,14 @@
   justify-content: center;
   padding: 10px 18px; 
   margin-right: 8px;
-
   flex: 0 0 auto;
-
-  
   border: 1px solid rgba(255, 255, 255, 0.9);
-
   background: rgba(255, 255, 255, 0.06);
   color: rgba(255, 255, 255, 0.9);
-
   font-size: 10px;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
-
   transition:
     background 0.25s ease,
     color 0.25s ease,
@@ -101,34 +86,159 @@
   box-shadow: 0 4px 14px rgba(255, 77, 77, 0.45);
 }
 
+/* Push specific buttons to the right */
+.nButton.pushRight:first-of-type {
+  margin-left: auto;
+}
+
+/* Hamburger menu - hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: 12px;
+  z-index: 101;
+}
+
+.hamburger span {
+  width: 22px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Hamburger animation when active */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-4px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-4px, -5px);
+}
+
+/* Dropdown menu */
+.navDropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: none;
+  min-width: 200px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+.navDropdown.active {
+  max-height: 400px;
+}
+
+.navDropdown .nButton {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  text-align: left;
+}
+
+.navDropdown .nButton:last-child {
+  border-bottom: none;
+}
+
+.navDropdown .nButton:hover {
+  background: #0081DC;
+  transform: none;
+}
+
+/* Menu container */
+.navMenu {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* Hide dropdown buttons on desktop */
+.dropdownOnly {
+  display: none !important;
+}
 
 /* ===== Mobile & Small Screens ===== */
 @media (max-width: 768px) {
   .navBar {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding: 10px 12px;
   }
-
+  
   .Logo {
     width: 64px;
     height: 64px;
   }
-
+  
   .nIcon {
     width: 6vh;
     height: 6vh;
     margin-right: 0.5vw;
   }
-
+  
   .nButton {
     font-size: 8px;
     padding: 8px 12px;
     margin-right: 6px;
   }
-
+  
   .nIconContainer {
     flex-wrap: wrap;
     gap: 6px;
+    order: 0;
+  }
+  
+  /* Show hamburger on mobile and position it after logo */
+  .hamburger {
+    display: flex;
+    order: 1;
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  /* Position navMenu to the right */
+  .navMenu {
+    order: 2;
+    margin-left: auto;
+  }
+  
+  /* Show dropdown container on mobile */
+  .navDropdown {
+    display: block;
+  }
+  
+  /* Show dropdown buttons only in mobile dropdown */
+  .dropdownOnly {
+    display: block !important;
+  }
+  
+  /* Hide middle buttons on mobile, keep last two visible */
+  .navMenu .nButton.hideOnMobile {
+    display: none;
+  }
+  
+  /* Remove auto margin on mobile since navMenu has it */
+  .nButton.pushRight:first-of-type {
+    margin-left: 0;
   }
 }
 
@@ -138,20 +248,32 @@
     flex-direction: row;
     align-items: center;
   }
-
+  
   .Logo {
     width: 56px;
     height: 56px;
   }
-
+  
   .nButton {
     font-size: 7px;
     padding: 6px 10px;
   }
-
+  
   .nIcon {
     width: 5vh;
     height: 5vh;
   }
+  
+  .hamburger span {
+    width: 18px;
+  }
+  
+  .navDropdown {
+    min-width: 180px;
+  }
+  
+  .navDropdown .nButton {
+    font-size: 7px;
+    padding: 8px 12px;
+  }
 }
-
