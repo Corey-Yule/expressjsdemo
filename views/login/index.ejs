@@ -50,8 +50,9 @@
       window.serverActiveForm = '<%= activeForm || "loginForm" %>';
     </script>
     <script type="module">
-      import { generateBackground } from '/javascript/components/controller.js';
+      import { generateBackground, generateNavBar } from '/javascript/components/controller.js';
       
+      generateNavBar()
       generateBackground();
     </script>
     <script type="module" src="/javascript/login.js"></script>
