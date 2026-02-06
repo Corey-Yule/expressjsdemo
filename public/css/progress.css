@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: #101417;
+  /*background: #101417; */
 }
 
 .progress-panel {
