@@ -5,15 +5,21 @@ body {
   min-height: 100vh;
   color: white;
   font-family: 'Press Start 2P', monospace;
+  background: #101417;
 }
 
-/* Whole page wrapper */
+/* This pushes the content to the right of the vertical nav */
+.main-content {
+  margin-left: 220px;    /* set this to your sidebar width */
+  min-height: 100vh;
+}
+
+/* Match Progress page style */
 .leaderboard-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #101417;
   padding-top: 90px;
   padding-bottom: 80px;
 }
@@ -34,28 +40,23 @@ body {
   align-items: center;
 }
 
-/* Pixel avatars */
-.podium-avatar {
-  width: 120px;
-  height: 120px;
-  image-rendering: pixelated;
-  margin-bottom: -30px;      /* overlap the block */
-  z-index: 2;
-}
-
-/* Podium block matches dark rounded cards style */
+/* Base podium block (2nd & 3rd) */
 .podium-block {
-  width: 220px;
+  width: 240px;
   height: 200px;
   background: linear-gradient(to bottom, #050608 0%, #050608 40%, #666666 100%);
   border-radius: 18px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.04);
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/* 1st place elevated on desktop/tablet */
+.podium-1 {
+  transform: translateY(-25px);
 }
 
 .podium-1 .podium-block {
@@ -68,7 +69,7 @@ body {
   letter-spacing: 0.14em;
 }
 
-.podium-text.place {
+.podium-text.position {
   font-size: 18px;
   margin-bottom: 16px;
 }
@@ -79,11 +80,12 @@ body {
   margin-bottom: 4px;
 }
 
-/* ===== Table under podiums – same rounded black pill rows ===== */
+/* ===== Table rows ===== */
 
-.leaderboard-table-wrapper {
+.leaderboard-wrapper {
   width: 80%;
   max-width: 900px;
+  margin-top: 40px;
 }
 
 .leaderboard-header-row {
@@ -121,4 +123,57 @@ body {
 
 .leaderboard-row span {
   text-align: left;
+}
+
+/* ===== Phone ===== */
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .leaderboard-page {
+    padding-top: 40px;
+  }
+
+  /* Stack podiums vertically, but 1st at the top */
+  .leaderboard-top3 {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  /* Reorder: 1st, then 2nd, then 3rd */
+  .podium-1 { order: 1; transform: translateY(0); }
+  .podium-2 { order: 2; }
+  .podium-3 { order: 3; }
+
+  .podium-block,
+  .podium-1 .podium-block {
+    width: 260px;
+    height: 180px;
+  }
+
+  .podium-text.position {
+    font-size: 16px;
+  }
+
+  .podium-text.level,
+  .podium-text.name {
+    font-size: 12px;
+  }
+
+  /* Table takes full width and rows are a bit smaller */
+  .leaderboard-wrapper {
+    width: 95%;
+  }
+
+  .leaderboard-header-row,
+  .leaderboard-row {
+    grid-template-columns: 1fr 1.4fr 1fr;
+    column-gap: 12px;
+    font-size: 12px;
+    padding: 10px 16px;
+  }
 }

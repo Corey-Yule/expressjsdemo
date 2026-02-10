@@ -97,7 +97,6 @@ async function getUser(username) {
     .from('profiles')
     .select('username')
     .eq('username', username)
-    .limit(1)
 
   if (error) { throw error }
 

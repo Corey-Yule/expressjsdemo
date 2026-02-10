@@ -52,8 +52,12 @@ const queries = {
       .eq('username', user)
       .limit(1)
   },
-
-
+  
+  getNumUsers: () => {
+    return supabase
+      .from("profiles")
+      .select("*", { count: "exact", head: true })
+  },
 }
 
 module.exports = { queries }
