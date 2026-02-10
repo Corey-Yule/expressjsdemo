@@ -1,17 +1,12 @@
-<<<<<<< HEAD
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-=======
+
 body {
   margin: 0;
   min-height: 100vh;
   color: white;
   font-family: 'Inter', 'Helvetica Neue', sans-serif;
-  background: black
+  background: #101417;
 }
->>>>>>> d992588884fe13fa525c8f703bf6954d557b198d
 
 
 .page-title {
@@ -95,6 +90,8 @@ body {
 .mission-text {
   font-size: 13px;     
   letter-spacing: 0.5px;
+  font-family: 'Press Start 2P', monospace;
+
 }
 
 /* little hover lift */
