@@ -7,6 +7,7 @@
   <title>Leaderboard</title>
 </head>
 <body>
+    <main class="main-content">
     <div class="leaderboard-page">
         <div class="leaderboard-top3">
 
@@ -52,10 +53,11 @@
             </div>
 
             <div class="leaderboard-rows" id="leaderboard-rows">
-                <!-- JS -->
+                <!-- Inserted with JS -->
             </div>
         </div>
     </div>
+    </main>
     
     <script src="/javascript/htmx.min.js"></script>
     <script type="module">
@@ -64,7 +66,30 @@
     generateNavBar();
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = [
+                { level: 50, username: 'Dave1', missions: 12 },
+                { level: 45, username: 'Dave2', missions: 10 },
+                { level: 42, username: 'Dave3', missions: 9 },                
+                { level: 40, username: 'Dave4', missions: 8 },
+                { level: 38, username: 'Dave5', missions: 7 },    
+                { level: 35, username: 'Dave6', missions: 6 }
+        ];
+        
+        const container = document.getElementById('leaderboard-rows');
 
+        data.forEach(entry => {
+            const row = document.createElement('div');
+            row.className = 'leaderboard-row';
+            row.innerHTML =
+            '<span>' + entry.level + '</span>' +
+            '<span>' + entry.username + '</span>' +
+            '<span>' + entry.missions + '</span>';
+            container.appendChild(row);
+        });
+    });
+    </script>    
 </body>
 </html>
 

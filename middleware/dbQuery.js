@@ -93,13 +93,15 @@ async function areFriends(user, friend) {
 }
 
 async function getUser(username) {
-  const { data, error } = await supabase.from('profiles')
+  const { data, error } = await supabase
+    .from('profiles')
     .select('username')
     .eq('username', username)
+    .limit(1)
 
   if (error) { throw error }
 
-  return data[0].username
+  return data
 }
 
 async function getNumUsers() {
@@ -114,8 +116,9 @@ async function getNumUsers() {
   return count;
 }
 
-function getQuery() {
-  console.log(queries)
+async function getQuery() {
+  const user = await getUser("james")
+  console.log(user)
 }
 
-module.exports = { getNumUsers, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends }
+module.exports = { getQuery, getNumUsers, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends }

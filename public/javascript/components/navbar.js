@@ -6,167 +6,146 @@ const buttons = [
   },
   {
     anchor: '/aboutUs',
-    text: 'About us',
-    hideOnMobile: true
+    text: 'About us'
   },
   {
     anchor: '/missions',
-    text: 'Missions',
-    hideOnMobile: true
+    text: 'Missions'
+  },
+  {
+    anchor: '/leaderboard',
+    text: 'Leaderboard'
   },
   {
     anchor: '/progress',
-    text: 'Progress',
-    hideOnMobile: true
+    text: 'Progress'
   },
   {
     anchor: '/social',
     text: 'Social',
-    hideOnMobile: true
+    presentOnLogin: true
   },
   {
     anchor: '/account',
     text: 'Account Settings',
+    presentOnLogin: true,
     class: 'settingsButton'
   },
   {
     anchor: '/login',
-    anchorClass: 'loginButton',
     text: 'Login',
     removeOnLogin: true,
     class: 'loginButtons'
-  },
+  }
 ]
 
 export async function createNavBar() {
-  const container = document.body
-  const loggedIn = await getLogin()
-  
-  const nav = createNav(container)
-  const hamburger = createHamburger(nav)
-  const dropdown = createDropDown(nav)
-  const menuContainer = createMenuContainer(nav)
+  // 🔒 Prevent duplicate navbars
+  if (document.querySelector('.navBar')) return
 
   addCss()
-  
-  for (const button of buttons) {
-    if (loggedIn && button.removeOnLogin) {
-      continue
-    }
-    
-    // Add to dropdown if it should hide on mobile
-    if (button.hideOnMobile) {
-      const dropdownBtn = createButton(dropdown, button)
-      dropdownBtn.classList.add('dropdownOnly')
-    }
-    
-    // Add to main menu
-    const mainBtn = createButton(menuContainer, button)
-    if (button.hideOnMobile) {
-      mainBtn.classList.add('hideOnMobile')
-    }
-  }
-  
 
-  addEvents(hamburger, dropdown)
+  const loggedIn = await getLogin()
+
+  const nav = createNav(document.body)
+  const hamburger = createHamburger(document.body)
+  const menuContainer = createMenuContainer(nav)
+
+  for (const button of buttons) {
+    if (loggedIn && button.removeOnLogin) { continue }
+    if (!loggedIn && button.presentOnLogin) { continue }
+    createButton(menuContainer, button)
+  }
+
+  addEvents(hamburger, nav)
 }
 
-function addEvents(hamburger, dropdown) {
-  // Toggle dropdown on hamburger click
+/* =====================
+   EVENTS
+===================== */
+
+function addEvents(hamburger, nav) {
   hamburger.addEventListener('click', (e) => {
     e.stopPropagation()
-    dropdown.classList.toggle('active')
+    nav.classList.toggle('active')
     hamburger.classList.toggle('active')
   })
-  
-  // Close dropdown when clicking a link
-  dropdown.addEventListener('click', () => {
-    dropdown.classList.remove('active')
-    hamburger.classList.remove('active')
-  })
-  
-  // Close dropdown when clicking outside
+
   document.addEventListener('click', (e) => {
-    if (!nav.contains(e.target)) {
-      dropdown.classList.remove('active')
+    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+      nav.classList.remove('active')
       hamburger.classList.remove('active')
     }
   })
+}
+
+/* =====================
+   ELEMENT CREATORS
+===================== */
+
+function createNav(container) {
+  const nav = document.createElement('nav')
+  nav.className = 'navBar'
+  container.insertBefore(nav, container.firstChild)
+  return nav
+}
+
+function createMenuContainer(nav) {
+  const menu = document.createElement('div')
+  menu.className = 'navMenu'
+  nav.appendChild(menu)
+  return menu
 }
 
 function createHamburger(parent) {
   const hamburger = document.createElement('button')
   hamburger.className = 'hamburger'
   hamburger.setAttribute('aria-label', 'Menu')
+
   hamburger.innerHTML = `
     <span></span>
     <span></span>
     <span></span>
   `
+
   parent.appendChild(hamburger)
   return hamburger
 }
 
-function createDropDown(nav){
-   // Create dropdown menu container
-  const dropdown = document.createElement('div')
-  dropdown.className = 'navDropdown'
-  nav.appendChild(dropdown)
+function createButton(parent, options) {
+  const anchor = document.createElement('a')
+  anchor.href = options.anchor
 
-  return dropdown;
+  if (options.image) {
+    anchor.className = 'nIconContainer'
+    const img = document.createElement('img')
+    img.src = options.image
+    img.className = options.class
+    anchor.appendChild(img)
+  } else {
+    anchor.className = `nButton ${options.class || ''}`.trim()
+    anchor.textContent = options.text
+  }
+
+  parent.appendChild(anchor)
 }
 
-function createMenuContainer(nav) {
-    // Create regular menu container for visible buttons
-  const menuContainer = document.createElement('div')
-  menuContainer.className = 'navMenu'
-  nav.appendChild(menuContainer)
-
-  return menuContainer;
-}
+/* =====================
+   HELPERS
+===================== */
 
 function getLogin() {
   return fetch('/auth/status')
     .then(res => res.json())
-    .then(data => {
-      return data.loggedIn
-    })
+    .then(data => data.loggedIn)
+    .catch(() => false)
 }
 
 function addCss() {
-  const head = document.head
-  var link = document.createElement('link')
-  link.type = 'text/css'
+  if (document.querySelector('link[href="/css/navbar.css"]')) return
+
+  const link = document.createElement('link')
   link.rel = 'stylesheet'
   link.href = '/css/navbar.css'
-  head.appendChild(link)
-}
-
-function createButton(parent, options) {
-  var anchor = document.createElement('a')
-  anchor.href = options.anchor
-  if (options.image) {
-    anchor.className = 'nIconContainer'
-    createImage(anchor, options)
-  } else {
-    anchor.className = 'nButton'
-    anchor.innerHTML = options.text
-  }
-  parent.appendChild(anchor)
-  return anchor
-}
-
-function createImage(parent, options) {
-  var img = document.createElement('img')
-  img.src = options.image
-  img.className = options.class
-  parent.appendChild(img)
-}
-
-function createNav(container) {
-  var nav = document.createElement('nav')
-  nav.id = "Nav"
-  nav.className = 'navBar'
-  container.insertBefore(nav, container.firstChild)
-  return nav
+  document.head.appendChild(link)
 }

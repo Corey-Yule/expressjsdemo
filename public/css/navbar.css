@@ -1,79 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+/* =====================
+   SIDEBAR BASE
+===================== */
+
 .navBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 240px;
+  height: 100vh;
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+
   background-color: #111111;
-  text-align: left;
-  padding: 14px 16px;
+  padding: 16px 12px;
+
   z-index: 100;
-  position: relative;
+  transition: transform 0.3s ease;
 }
 
-.Logo {
-  width: 100px;
-  height: 100px;
-  margin: 0;
-  padding-block: 0;
-}
+/* =====================
+   LOGO
+===================== */
 
 .nIconContainer {
   display: flex;
-  align-items: center;
-  z-index: 100;
+  justify-content: center;
+  margin-bottom: 24px;
 }
 
-.nIcon {
-  display: flex;
-  position: relative;
-  width: 8vh;
-  height: 8vh;
-  padding-right: 0.5vw;
-  margin-right: 1vw;
+.Logo {
+  width: 96px;
+  height: 96px;
 }
+
+/* =====================
+   MENU
+===================== */
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+/* =====================
+   BUTTONS
+===================== */
 
 .nButton {
   font-family: 'Press Start 2P', monospace;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 10px 18px; 
-  margin-right: 8px;
-  flex: 0 0 auto;
+
+  width: 80%;
+  padding: 12px 14px;
+
   border: 1px solid rgba(255, 255, 255, 0.9);
   background: rgba(255, 255, 255, 0.06);
+
   color: rgba(255, 255, 255, 0.9);
   font-size: 10px;
-  font-weight: 500;
   text-decoration: none;
   cursor: pointer;
+
   transition:
     background 0.25s ease,
     color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.15s ease;
+    transform 0.15s ease,
+    box-shadow 0.25s ease;
 }
 
 .nButton:hover {
   background: #0081DC;
   color: #fff;
-  box-shadow: #0081DC;
-  transform: translateY(-1px);
+  transform: translateX(3px);
 }
 
 .nButton:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
+  transform: translateX(1px);
 }
 
-/* Optional: active/current page */
+/* Active page */
 .nButton.active {
   background: #667eea;
   color: #fff;
-  box-shadow: 0 4px 18px rgba(102, 126, 234, 0.45);
 }
 
-/* Optional: danger / logout button */
+/* Danger / logout */
 .nButton.danger {
   background: rgba(255, 77, 77, 0.15);
   border-color: rgba(255, 77, 77, 0.3);
@@ -83,36 +102,37 @@
 .nButton.danger:hover {
   background: #ff4d4d;
   color: #fff;
-  box-shadow: 0 4px 14px rgba(255, 77, 77, 0.45);
 }
 
-/* Push specific buttons to the right */
-.nButton.pushRight:first-of-type {
-  margin-left: auto;
-}
+/* =====================
+   HAMBURGER
+===================== */
 
-/* Hamburger menu - hidden on desktop */
 .hamburger {
   display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+
   flex-direction: column;
+  gap: 4px;
+
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  margin-left: 12px;
-  z-index: 101;
+
+  z-index: 200;
 }
 
 .hamburger span {
   width: 22px;
   height: 2px;
   background-color: rgba(255, 255, 255, 0.9);
-  margin: 3px 0;
-  transition: 0.3s;
   border-radius: 2px;
+  transition: 0.3s;
 }
 
-/* Hamburger animation when active */
+/* Hamburger animation */
 .hamburger.active span:nth-child(1) {
   transform: rotate(-45deg) translate(-4px, 5px);
 }
@@ -125,155 +145,49 @@
   transform: rotate(45deg) translate(-4px, -5px);
 }
 
-/* Dropdown menu */
-.navDropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #111111;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-top: none;
-  min-width: 200px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  z-index: 99;
-}
+/* =====================
+   MOBILE
+===================== */
 
-.navDropdown.active {
-  max-height: 400px;
-}
-
-.navDropdown .nButton {
-  display: block;
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0;
-  text-align: left;
-}
-
-.navDropdown .nButton:last-child {
-  border-bottom: none;
-}
-
-.navDropdown .nButton:hover {
-  background: #0081DC;
-  transform: none;
-}
-
-/* Menu container */
-.navMenu {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-/* Hide dropdown buttons on desktop */
-.dropdownOnly {
-  display: none !important;
-}
-
-/* ===== Mobile & Small Screens ===== */
 @media (max-width: 768px) {
   .navBar {
-    flex-wrap: nowrap;
+    transform: translateX(-100%);
+  }
+
+  .navBar.active {
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .Logo {
+    width: 72px;
+    height: 72px;
+  }
+
+  .nButton {
+    font-size: 9px;
     padding: 10px 12px;
   }
-  
+}
+
+/* =====================
+   VERY SMALL SCREENS
+===================== */
+
+@media (max-width: 480px) {
+  .navBar {
+    width: 200px;
+  }
+
   .Logo {
     width: 64px;
     height: 64px;
   }
-  
-  .nIcon {
-    width: 6vh;
-    height: 6vh;
-    margin-right: 0.5vw;
-  }
-  
+
   .nButton {
     font-size: 8px;
-    padding: 8px 12px;
-    margin-right: 6px;
-  }
-  
-  .nIconContainer {
-    flex-wrap: wrap;
-    gap: 6px;
-    order: 0;
-  }
-  
-  /* Show hamburger on mobile and position it after logo */
-  .hamburger {
-    display: flex;
-    order: 1;
-    margin-left: 0;
-    margin-right: auto;
-  }
-  
-  /* Position navMenu to the right */
-  .navMenu {
-    order: 2;
-    margin-left: auto;
-  }
-  
-  /* Show dropdown container on mobile */
-  .navDropdown {
-    display: block;
-  }
-  
-  /* Show dropdown buttons only in mobile dropdown */
-  .dropdownOnly {
-    display: block !important;
-  }
-  
-  /* Hide middle buttons on mobile, keep last two visible */
-  .navMenu .nButton.hideOnMobile {
-    display: none;
-  }
-  
-  /* Remove auto margin on mobile since navMenu has it */
-  .nButton.pushRight:first-of-type {
-    margin-left: 0;
-  }
-}
-
-/* ===== Very Small Screens (Phones) ===== */
-@media (max-width: 480px) {
-  .navBar {
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .Logo {
-    width: 56px;
-    height: 56px;
-  }
-  
-  .nButton {
-    font-size: 7px;
-    padding: 6px 10px;
-  }
-  
-  .nIcon {
-    width: 5vh;
-    height: 5vh;
-  }
-  
-  .hamburger span {
-    width: 18px;
-  }
-  
-  .navDropdown {
-    min-width: 180px;
-  }
-  
-  .navDropdown .nButton {
-    font-size: 7px;
-    padding: 8px 12px;
   }
 }

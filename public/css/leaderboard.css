@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* Whole page wrapper */
+.leaderboard-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #101417;
+  padding-top: 90px;
+  padding-bottom: 80px;
+}
+
+/* ===== Top 3 podiums ===== */
+
+.leaderboard-top3 {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 70px;
+  margin-bottom: 80px;
+}
+
+.podium {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Pixel avatars */
+.podium-avatar {
+  width: 120px;
+  height: 120px;
+  image-rendering: pixelated;
+  margin-bottom: -30px;      /* overlap the block */
+  z-index: 2;
+}
+
+/* Podium block matches dark rounded cards style */
+.podium-block {
+  width: 220px;
+  height: 200px;
+  background: linear-gradient(to bottom, #050608 0%, #050608 40%, #666666 100%);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.podium-1 .podium-block {
+  width: 260px;
+  height: 220px;
+}
+
+.podium-text {
+  text-align: center;
+  letter-spacing: 0.14em;
+}
+
+.podium-text.place {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.podium-text.level,
+.podium-text.name {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* ===== Table under podiums – same rounded black pill rows ===== */
+
+.leaderboard-table-wrapper {
+  width: 80%;
+  max-width: 900px;
+}
+
+.leaderboard-header-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  column-gap: 40px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.leaderboard-header-row span {
+  text-align: left;
+}
+
+.leaderboard-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  column-gap: 40px;
+  align-items: center;
+  padding: 14px 26px;
+
+  background: #050608;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+
+  font-size: 14px;
+}
+
+.leaderboard-row span {
+  text-align: left;
+}

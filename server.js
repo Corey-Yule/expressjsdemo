@@ -23,6 +23,7 @@ const authRouter = require('./routes/authRouter.js')
 const accountRouter = require('./routes/accountRouter.js')
 const aboutUsRouter = require('./routes/aboutUsRouter.js')
 const progressRouter = require('./routes/progressRouter.js')
+const leaderboardRouter = require('./routes/leaderboardRouter.js')
 
 app.use('/social', socialRouter);
 app.use('/missions', missionsRouter); 
@@ -32,6 +33,7 @@ app.use('/auth', authRouter);
 app.use('/account', accountRouter);
 app.use('/aboutUs', aboutUsRouter);
 app.use('/progress', progressRouter);
+app.use('/leaderboard', leaderboardRouter);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
