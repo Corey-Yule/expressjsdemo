@@ -5,7 +5,6 @@ const { getUsername, redirectIfNotAuthenticated } = require('../middleware/auth.
 
 router.get('/', async (req, res) => {
   redirectIfNotAuthenticated(req, res)
-
   const requests = await getFriendReqs(req)
   const friends = await getFriends(req)
   const username = await getUsername(req)
