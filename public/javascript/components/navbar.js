@@ -20,8 +20,8 @@ const buttons = [
     hideOnMobile: true
   },
   {
-    anchor: '/test',
-    text: 'Testing Ground',
+    anchor: '/social',
+    text: 'Social',
     hideOnMobile: true
   },
   {
@@ -40,47 +40,22 @@ const buttons = [
 
 export async function createNavBar() {
   const container = document.body
-  const nav = createNav(container)
   const loggedIn = await getLogin()
+  
+  const nav = createNav(container)
+  const hamburger = createHamburger(nav)
+  const dropdown = createDropDown(nav)
+  const menuContainer = createMenuContainer(nav)
+
   addCss()
   
-  // Track if we need the hamburger (if there are any hideOnMobile buttons)
-  let hasDropdownItems = false
-  
-  // Create hamburger button
-  const hamburger = createHamburger(nav)
-
-  // First pass: add logo
-  for (const button of buttons) {
-    if (button.image) {
-      createButton(nav, button)
-    }
-  }
-  
-  // Create dropdown menu container
-  const dropdown = document.createElement('div')
-  dropdown.className = 'navDropdown'
-  nav.appendChild(dropdown)
-  
-  // Create regular menu container for visible buttons
-  const menuContainer = document.createElement('div')
-  menuContainer.className = 'navMenu'
-  nav.appendChild(menuContainer)
-  
-  // Second pass: add all text buttons
   for (const button of buttons) {
     if (loggedIn && button.removeOnLogin) {
       continue
     }
     
-    // Skip logo (already added)
-    if (button.image) {
-      continue
-    }
-    
     // Add to dropdown if it should hide on mobile
     if (button.hideOnMobile) {
-      hasDropdownItems = true
       const dropdownBtn = createButton(dropdown, button)
       dropdownBtn.classList.add('dropdownOnly')
     }
@@ -92,6 +67,11 @@ export async function createNavBar() {
     }
   }
   
+
+  addEvents(hamburger, dropdown)
+}
+
+function addEvents(hamburger, dropdown) {
   // Toggle dropdown on hamburger click
   hamburger.addEventListener('click', (e) => {
     e.stopPropagation()
@@ -125,6 +105,24 @@ function createHamburger(parent) {
   `
   parent.appendChild(hamburger)
   return hamburger
+}
+
+function createDropDown(nav){
+   // Create dropdown menu container
+  const dropdown = document.createElement('div')
+  dropdown.className = 'navDropdown'
+  nav.appendChild(dropdown)
+
+  return dropdown;
+}
+
+function createMenuContainer(nav) {
+    // Create regular menu container for visible buttons
+  const menuContainer = document.createElement('div')
+  menuContainer.className = 'navMenu'
+  nav.appendChild(menuContainer)
+
+  return menuContainer;
 }
 
 function getLogin() {

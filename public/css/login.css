@@ -20,14 +20,17 @@ body {
     background-color: #050505;
     color: white;
     height: 100vh;
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     justify-content: center;
 }
 
 /* Form container above background */
 .form-container {
-    position: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     z-index: 10; /* Higher than background */
     background: rgba(70, 230, 230, 0.05);
     padding: 40px;
@@ -35,6 +38,7 @@ body {
     width: 350px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    
 }
 
 /* Toggle buttons */

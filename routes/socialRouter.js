@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends } = require('../middleware/dbQuery.js')
+const { getQuery, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends } = require('../middleware/dbQuery.js')
 const { getUsername, redirectIfNotAuthenticated } = require('../middleware/auth.js')
 
 router.get('/', async (req, res) => {
@@ -10,29 +10,27 @@ router.get('/', async (req, res) => {
   const friends = await getFriends(req)
   const username = await getUsername(req)
 
-  res.render('test/index', { requests, friends, username })
-})
+  getQuery()
 
-router.get('/htmx', (req, res) => {
-  res.render('test/htmxTest')
+  if (username) { res.render('social/index', { requests, friends, username }) }
 })
 
 router.post('/addFriend', (req, res) => {
   addFriend(req)
 
-  res.redirect('/test')
+  res.redirect('/social')
 })
 
 router.post('/acceptRequest', (req, res) => {
   acceptFriendReq(req)
 
-  res.redirect('/test')
+  res.redirect('/social')
 })
 
 router.post('/denyRequest', (req, res) => {
   denyFriendReq(req)
 
-  res.redirect('/test')
+  res.redirect('/social')
 })
 
 module.exports = router

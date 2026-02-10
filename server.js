@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.render('index')
 });
 
-const testRouter = require('./routes/testRouter.js')
+const socialRouter = require('./routes/socialRouter.js')
 const missionsRouter = require('./routes/missionsRouter.js')
 const loginRouter = require('./routes/loginRouter.js')
 const databaseQuery = require('./routes/databaseQuery.js')
@@ -24,7 +24,7 @@ const accountRouter = require('./routes/accountRouter.js')
 const aboutUsRouter = require('./routes/aboutUsRouter.js')
 const progressRouter = require('./routes/progressRouter.js')
 
-app.use('/test', testRouter);
+app.use('/social', socialRouter);
 app.use('/missions', missionsRouter); 
 app.use('/login', loginRouter); 
 app.use('/database', databaseQuery);

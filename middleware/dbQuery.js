@@ -1,5 +1,6 @@
 const supabase = require('./supabase.js')
 const { getUsername } = require('./auth.js')
+const { queries } = require('./dbQueries.js')
 
 async function getFriends(req) {
   const user = await getUsername(req)
@@ -66,8 +67,6 @@ async function addFriend(req) {
 
   if (!friend || !user) { return }
 
-  console.log(curFriends)
-
   try {
     const { data, error } = await supabase
       .from('friends')
@@ -113,6 +112,10 @@ async function getNumUsers() {
   }
 
   return count;
+}
+
+function getQuery() {
+  console.log(queries)
 }
 
 module.exports = { getNumUsers, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends }
