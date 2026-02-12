@@ -18,6 +18,10 @@
         </li>
       <% } %>
     </ul>
+    <form class="add-friend" action="/test/addFriend" method="post">
+      <input type="text" name="username" placeholder="Add friend by username" required />
+      <button class="btn primary" type="submit">Add</button>
+    </form>
 
     <h2>Requests</h2>
     <ul class="list">
@@ -36,10 +40,7 @@
       <% } %>
     </ul>
 
-    <form class="add-friend" action="/test/addFriend" method="post">
-      <input type="text" name="username" placeholder="Add friend by username" required />
-      <button class="btn primary" type="submit">Add</button>
-    </form>
+    
   </div>
 </body>
 
