@@ -3,25 +3,157 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Biomarkers</title>
     <link rel="stylesheet" href="/css/bio.css">
   </head>
 
   <body>
-    <!--Title-->
-    <div class="page-title">
-      <h1>GitHealthy</h1>
-    </div>
+    <div class="data-holder">
 
-    <!-- Create a div here -->
+      <!-- Stats Section -->
+      <div class="bio-stats">
+        <div class="stat-card" id="calories">
+          <h3>Calories Burned (Kcal)</h3>
+          <p class="stat-value">-- kcal</p>
+        </div>
+
+        <div class="stat-card" id="steps">
+          <h3>Step Count</h3>
+          <p class="stat-value">-- steps</p>
+        </div>
+
+        <div class="stat-card" id="sleep">
+          <h3>Sleep (hrs)</h3>
+          <p class="stat-value">-- hrs</p>
+        </div>
+
+        <div class="stat-card" id="water">
+          <h3>Water Intake (Litres)</h3>
+          <p class="stat-value">-- L</p>
+        </div>
+
+        <div class="stat-card" id="weight">
+          <h3>Weight (Kg)</h3>
+          <p class="stat-value">-- kg</p>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <h2>Sleep Duration (Hours)</h2>
+        <canvas id="sleepChart"></canvas>
+      </div>
+
+      <div class="chart-wrapper">
+        <h2>Step Count</h2> 
+        <canvas id="stepsChart"></canvas>
+      </div>
+``
+
+    </div>
 
     <!--JavaScript-->
     <script src='/javascript/htmx.min.js'></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module">
-      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
-           
-      generateNavBar();
-      generateBackground();
-    </script>
+  import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+  generateNavBar();
+  generateBackground();
+
+  // Example Supabase mock loading placeholder
+  async function loadBiomarkers() {
+    const data = {
+      calories: 530,
+      steps: 8234,
+      sleep: 7.2,
+      water: 2.1,
+      weight: 72.4
+    };
+
+    for (const [key, value] of Object.entries(data)) {
+      document.querySelector(`#${key} .stat-value`).textContent = value;
+    }
+  }
+
+  // Chart Data
+  const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const sleepData = [6.5, 7.2, 8.0, 7.8, 6.9, 7.3, 7.9];
+  const stepData  = [5200, 7900, 10000, 8300, 6400, 7200, 9000];
+
+  // ---- Sleep Chart ----
+  new Chart(document.getElementById('sleepChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: "Sleep (hrs)",
+        data: sleepData,
+        borderColor: "#3d86ff",
+        backgroundColor: "rgba(61,134,255,0.15)",
+        tension: 0.35,
+        borderWidth: 3,
+        pointRadius: 4,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false,
+          ticks: { color: "#e0e0e0" },
+          grid: { color: "#333" }
+        },
+        x: {
+          ticks: { color: "#e0e0e0" },
+          grid: { color: "#333" }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: { color: "#e0e0e0" }
+        }
+      }
+    }
+  });
+
+  // ---- Steps Chart ----
+  new Chart(document.getElementById('stepsChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: "Steps",
+        data: stepData,
+        borderColor: "#00d084",
+        backgroundColor: "rgba(0,208,132,0.15)",
+        tension: 0.35,
+        borderWidth: 3,
+        pointRadius: 4,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { color: "#e0e0e0" },
+          grid: { color: "#333" }
+        },
+        x: {
+          ticks: { color: "#e0e0e0" },
+          grid: { color: "#333" }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: { color: "#e0e0e0" }
+        }
+      }
+    }
+  });
+
+  loadBiomarkers();
+</script>
   </body>
 </html>

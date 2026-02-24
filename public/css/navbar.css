@@ -149,7 +149,7 @@
    MOBILE
 ===================== */
 
-@media (max-width: 768px) {
+@media (max-width: 1725px) {
   .navBar {
     transform: translateX(-100%);
   }

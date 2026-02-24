@@ -20,6 +20,7 @@ const authRouter = require('./routes/authRouter.js')
 const accountRouter = require('./routes/accountRouter.js')
 const aboutUsRouter = require('./routes/aboutUsRouter.js')
 const progressRouter = require('./routes/progressRouter.js')
+const homeRouter = require('./routes/homeRouter.js')
 const leaderboardRouter = require('./routes/leaderboardRouter.js')
 const biomarkerRouter = require('./routes/biomarkerRouter.js')
 
@@ -32,6 +33,7 @@ app.use('/auth', authRouter);
 app.use('/account', accountRouter);
 app.use('/aboutUs', aboutUsRouter);
 app.use('/progress', progressRouter);
+app.use('/home', homeRouter);
 app.use('/leaderboard', leaderboardRouter);
 app.use('/biomarker', biomarkerRouter);
 

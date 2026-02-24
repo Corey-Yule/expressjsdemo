@@ -106,7 +106,7 @@ async function getUser(username) {
 async function getNumUsers() {
   const { count, error } = await supabase
     .from("profiles")
-    .select("*", { count: "exact", head: true });
+    .select("*", { count: "exact", head: true })
 
   if (error) {
     throw error;
@@ -115,8 +115,8 @@ async function getNumUsers() {
   return count;
 }
 
-async function getQuery() {
-  const user = await getUser("james")
+async function getQuery(query) {
+  const user = await getUser("james", "test")
   console.log(user)
 }
 

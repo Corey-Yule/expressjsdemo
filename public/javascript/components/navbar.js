@@ -9,6 +9,11 @@ const buttons = [
     text: 'About us'
   },
   {
+    anchor: '/home',
+    text: 'Home',
+    presentOnLogin: true
+  },
+  {
     anchor: '/missions',
     text: 'Missions',
     presentOnLogin: true
@@ -27,6 +32,12 @@ const buttons = [
     anchor: '/social',
     text: 'Social',
     presentOnLogin: true
+  },
+  {
+    anchor: '/biomarker',
+    text: 'Biomarker Data',
+    presentOnLogin: true,
+    class: 'biomarker'
   },
   {
     anchor: '/account',

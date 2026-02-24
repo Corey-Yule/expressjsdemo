@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, intial-scale=1" />
+    <link rel="stylesheet" href="/css/home.css">
+    <title>Home</title>
+</head>
+<body>
+    <main class="main-content">
+        <div class="home-page">
+
+            <!-- Player name -->
+            <h1 class="player-name">John</h1>
+
+            <div class="home-layout">
+                <div class="character-wrapper">
+                    <img src="/Images/player-john.png"
+                        alt="Player sprite"
+                        class="character-sprite">
+                </div>
+
+                <div class="stats-card">
+                    <div class="stat-row">
+                        <div class="stat-icon">
+                            <img src="/Images/icon-fire.png"
+                                alt="Calories">
+                        </div>
+                        <div class="stat-text">
+                            <span class="stat-value"
+                                id="stat-calories">400</span>
+                                <span class="stat-label">Kcal</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-row">
+                        <div class="stat-icon">
+                            <img src="/Images/icon-sleep.png"
+                                alt="Sleep">
+                        </div>
+                        <div class="stat-text">
+                            <span class="stat-value"
+                                id="stat-sleep">8</span>
+                                <span class="stat-label">Sleep</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-row">
+                        <div class="stat-icon">
+                            <img src="/Images/icon-weight.png"
+                                alt="Weight">
+                        </div>
+                        <div class="stat-text">
+                            <span class="stat-value"
+                                id="stat-weight">70</span>
+                                <span class="stat-label">Kg</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-row">
+                        <div class="stat-icon">
+                            <img src="/Images/icon-steps.png"
+                                alt="Steps">
+                        </div>
+                        <div class="stat-text">
+                            <span class="stat-value"
+                                id="stat-steps">600</span>
+                                <span class="stat-label">Steps</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-row">
+                        <div class="stat-icon">
+                            <img src="/Images/icon-water.png"
+                                alt="Water">
+                        </div>
+                        <div class="stat-text">
+                            <span class="stat-value"
+                                id="stat-water">2L</span>
+                                <span class="stat-label">Water</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-row">
+                        <div class="stat-icon">
+                            <img src="/Images/icon-stress.png"
+                                alt="Stress">
+                        </div>
+                        <div class="stat-text">
+                            <span class="stat-value"
+                                id="stat-stress">77</span>
+                                <span class="stat-label">Stress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Label and Progress bar -->
+            <div class="level-section">
+                <div class="level-labels">
+                    <div class="level-main">
+                        <span class="level-number"
+                        id="level-number">100</span>
+                        <span class="level-text">Level</span>
+                    </div>
+                    <div class="level-progress-text">
+                        <span id="level-progress-text">25/100</span>
+                    </div>
+                </div>
+
+                <div class="level bar">
+                    <div class="level-bar-fill"
+                        id="level-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/javascript/htmx.min.js">
+    </script>
+
+    <script type="module">
+    import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+    generateBackground();
+    generateNavBar();
+    </script>
+
+    <script src="/javascript/home.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+  const player = {
+    name: 'John',
+    calories: 400,
+    sleep: 8,
+    weight: 70,
+    steps: 600,
+    water: 2,
+    stress: 77,
+    level: 100,
+    xpCurrent: 25,
+    xpMax: 100
+  };
+
+  document.querySelector('.player-name').textContent = player.name;
+  document.getElementById('stat-calories').textContent = player.calories;
+  document.getElementById('stat-sleep').textContent = player.sleep;
+  document.getElementById('stat-weight').textContent = player.weight;
+  document.getElementById('stat-steps').textContent = player.steps;
+  document.getElementById('stat-water').textContent = player.water + 'L';
+  document.getElementById('stat-stress').textContent = player.stress;
+
+  document.getElementById('level-number').textContent = player.level;
+  document.getElementById('level-progress-text').textContent =
+    `${player.xpCurrent}/${player.xpMax}`;
+
+  const percent = (player.xpCurrent / player.xpMax) * 100;
+  document.getElementById('level-bar-fill').style.width = percent + '%';
+});
+</script>
+
+
+
+</body>
+</html>
