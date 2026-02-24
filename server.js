@@ -11,10 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser()); // <----- NOTE: James this is where we are using cookie parsing 
 
-app.get('/', (req, res) => {
-  res.render('index')
-});
-
+const mainRouter = require('./routes/mainRouter.js')
 const socialRouter = require('./routes/socialRouter.js')
 const missionsRouter = require('./routes/missionsRouter.js')
 const loginRouter = require('./routes/loginRouter.js')
@@ -24,7 +21,9 @@ const accountRouter = require('./routes/accountRouter.js')
 const aboutUsRouter = require('./routes/aboutUsRouter.js')
 const progressRouter = require('./routes/progressRouter.js')
 const leaderboardRouter = require('./routes/leaderboardRouter.js')
+const biomarkerRouter = require('./routes/biomarkerRouter.js')
 
+app.use('/', mainRouter);
 app.use('/social', socialRouter);
 app.use('/missions', missionsRouter); 
 app.use('/login', loginRouter); 
@@ -34,7 +33,10 @@ app.use('/account', accountRouter);
 app.use('/aboutUs', aboutUsRouter);
 app.use('/progress', progressRouter);
 app.use('/leaderboard', leaderboardRouter);
+app.use('/biomarker', biomarkerRouter);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
 });
+
+
