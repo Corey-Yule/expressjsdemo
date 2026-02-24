@@ -10,15 +10,18 @@ const buttons = [
   },
   {
     anchor: '/missions',
-    text: 'Missions'
+    text: 'Missions',
+    presentOnLogin: true
   },
   {
     anchor: '/leaderboard',
-    text: 'Leaderboard'
+    text: 'Leaderboard',
+    presentOnLogin: true
   },
   {
     anchor: '/progress',
-    text: 'Progress'
+    text: 'Progress',
+    presentOnLogin: true
   },
   {
     anchor: '/social',
