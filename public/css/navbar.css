@@ -59,6 +59,7 @@
   align-items: center;
 
   width: 85%;
+  height: 2.5%;
   padding: 12px 14px;
 
   border: 1px solid rgba(255, 255, 255, 0.9);
@@ -170,6 +171,7 @@
   .nButton {
     font-size: 9px;
     padding: 10px 12px;
+    height: 5%;
   }
 }
 
@@ -189,5 +191,6 @@
 
   .nButton {
     font-size: 8px;
+    height: 5%;
   }
 }

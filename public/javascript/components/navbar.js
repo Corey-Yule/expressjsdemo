@@ -10,7 +10,7 @@ const buttons = [
   },
   {
     anchor: '/home',
-    text: 'Home',
+    text: 'Character',
     presentOnLogin: true
   },
   {
@@ -35,13 +35,13 @@ const buttons = [
   },
   {
     anchor: '/biomarker',
-    text: 'Biomarker Data',
+    text: 'Bio Data',
     presentOnLogin: true,
     class: 'biomarker'
   },
   {
     anchor: '/account',
-    text: 'Account Settings',
+    text: 'Settings',
     presentOnLogin: true,
     class: 'settingsButton'
   },
