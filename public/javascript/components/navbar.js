@@ -8,6 +8,12 @@ const buttons = [
     anchor: '/aboutUs',
     text: 'About us'
   },
+   {
+    anchor: '/biomarker',
+    text: 'Bio Data',
+    presentOnLogin: true,
+    class: 'biomarker'
+  },
   {
     anchor: '/home',
     text: 'Character',
@@ -24,20 +30,9 @@ const buttons = [
     presentOnLogin: true
   },
   {
-    anchor: '/progress',
-    text: 'Progress',
-    presentOnLogin: true
-  },
-  {
     anchor: '/social',
     text: 'Social',
     presentOnLogin: true
-  },
-  {
-    anchor: '/biomarker',
-    text: 'Bio Data',
-    presentOnLogin: true,
-    class: 'biomarker'
   },
   {
     anchor: '/account',

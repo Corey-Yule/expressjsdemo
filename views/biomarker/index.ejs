@@ -10,150 +10,109 @@
   <body>
     <div class="data-holder">
 
-      <!-- Stats Section -->
+      <!-- Header -->
+      <div class="dash-header">
+        <h1>
+          <span>// Health Monitor</span>
+          Biomarkers
+        </h1>
+        <div class="dash-date" id="dashDate">
+          <strong>--</strong>
+          Week View
+        </div>
+      </div>
+
+      <!-- Weekly Summary Row -->
+      <div class="weekly-row">
+        <div class="weekly-card">
+          <div class="label">Weekly Calories</div>
+          <div class="value" id="wkCals"><%= weekly.calories_sum ?? '--' %> kcal</div>
+        </div>
+        <div class="weekly-card">
+          <div class="label">Avg Sleep</div>
+          <div class="value green" id="wkSleep"><%= weekly.sleep_hours_avg ? parseFloat(weekly.sleep_hours_avg).toFixed(1) : '--' %> hrs</div>
+        </div>
+        <div class="weekly-card">
+          <div class="label">Days Logged</div>
+          <div class="value purple" id="wkDays"><%= weekly.days_logged ?? '--' %> / 7</div>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
       <div class="bio-stats">
         <div class="stat-card" id="calories">
-          <h3>Calories Burned (Kcal)</h3>
-          <p class="stat-value">-- kcal</p>
+          <h3>Calories</h3>
+          <p class="stat-value"><%= today.calories ?? '--' %></p>
+          <div class="stat-unit">kcal today</div>
         </div>
-
         <div class="stat-card" id="steps">
-          <h3>Step Count</h3>
-          <p class="stat-value">-- steps</p>
+          <h3>Steps</h3>
+          <p class="stat-value"><%= today.step_count ?? '--' %></p>
+          <div class="stat-unit">steps today</div>
         </div>
-
         <div class="stat-card" id="sleep">
-          <h3>Sleep (hrs)</h3>
-          <p class="stat-value">-- hrs</p>
+          <h3>Sleep</h3>
+          <p class="stat-value"><%= today.sleep_hours ?? '--' %></p>
+          <div class="stat-unit">hours last night</div>
         </div>
-
         <div class="stat-card" id="water">
-          <h3>Water Intake (Litres)</h3>
-          <p class="stat-value">-- L</p>
+          <h3>Water</h3>
+          <p class="stat-value"><%= today.water_intake ?? '--' %></p>
+          <div class="stat-unit">litres today</div>
         </div>
-
         <div class="stat-card" id="weight">
-          <h3>Weight (Kg)</h3>
-          <p class="stat-value">-- kg</p>
+          <h3>Weight</h3>
+          <p class="stat-value"><%= today.weight ?? '--' %></p>
+          <div class="stat-unit">kg</div>
         </div>
       </div>
 
-      <div class="chart-wrapper">
-        <h2>Sleep Duration (Hours)</h2>
-        <canvas id="sleepChart"></canvas>
-      </div>
+      <!-- Charts -->
+      <div class="charts-grid">
 
-      <div class="chart-wrapper">
-        <h2>Step Count</h2> 
-        <canvas id="stepsChart"></canvas>
-      </div>
-``
+        <div class="chart-wrapper">
+          <div class="chart-header">
+            <h2>Calorie Count — This Week</h2>
+            <span class="chart-badge live">● Live</span>
+          </div>
+          <canvas id="CalorieChart"></canvas>
+        </div>
 
+        <div class="chart-wrapper">
+          <div class="chart-header">
+            <h2>Sleep Duration</h2>
+            <span class="chart-badge">hrs / night</span>
+          </div>
+          <canvas id="sleepChart"></canvas>
+        </div>
+
+        <div class="chart-wrapper">
+          <div class="chart-header">
+            <h2>Weekly Completion</h2>
+            <span class="chart-badge">7-day view</span>
+          </div>
+          <canvas id="pieChart"></canvas>
+        </div>
+
+      </div>
     </div>
 
-    <!--JavaScript-->
-    <script src='/javascript/htmx.min.js'></script>
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const calsData   = <%- JSON.stringify(cals) %>;
+      const sleepData  = <%- JSON.stringify(sleep) %>;
+      const weeklyData = <%- JSON.stringify(weekly) %>;
+
+      const now = new Date();
+      document.getElementById('dashDate').innerHTML =
+        `<strong>${now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}</strong>Week View`;
+    </script>
+    <script src='/javascript/bio.js'></script>
     <script type="module">
-  import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
-  generateNavBar();
-  generateBackground();
-
-  // Example Supabase mock loading placeholder
-  async function loadBiomarkers() {
-    const data = {
-      calories: 530,
-      steps: 8234,
-      sleep: 7.2,
-      water: 2.1,
-      weight: 72.4
-    };
-
-    for (const [key, value] of Object.entries(data)) {
-      document.querySelector(`#${key} .stat-value`).textContent = value;
-    }
-  }
-
-  // Chart Data
-  const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const sleepData = [6.5, 7.2, 8.0, 7.8, 6.9, 7.3, 7.9];
-  const stepData  = [5200, 7900, 10000, 8300, 6400, 7200, 9000];
-
-  // ---- Sleep Chart ----
-  new Chart(document.getElementById('sleepChart'), {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: "Sleep (hrs)",
-        data: sleepData,
-        borderColor: "#3d86ff",
-        backgroundColor: "rgba(61,134,255,0.15)",
-        tension: 0.35,
-        borderWidth: 3,
-        pointRadius: 4,
-        pointHoverRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: false,
-          ticks: { color: "#e0e0e0" },
-          grid: { color: "#333" }
-        },
-        x: {
-          ticks: { color: "#e0e0e0" },
-          grid: { color: "#333" }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: { color: "#e0e0e0" }
-        }
-      }
-    }
-  });
-
-  // ---- Steps Chart ----
-  new Chart(document.getElementById('stepsChart'), {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: "Steps",
-        data: stepData,
-        borderColor: "#00d084",
-        backgroundColor: "rgba(0,208,132,0.15)",
-        tension: 0.35,
-        borderWidth: 3,
-        pointRadius: 4,
-        pointHoverRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: "#e0e0e0" },
-          grid: { color: "#333" }
-        },
-        x: {
-          ticks: { color: "#e0e0e0" },
-          grid: { color: "#333" }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: { color: "#e0e0e0" }
-        }
-      }
-    }
-  });
-
-  loadBiomarkers();
-</script>
+      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+      generateNavBar();
+      generateBackground();
+    </script>
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 export function createBackground(options = {}) {
 
 // Where to put the background when function is called
@@ -44,7 +43,7 @@ export function createBackground(options = {}) {
   // Spawns the floating particles.
   initParticles(particlesContainer, particleCount);
 
-  //Adds “mouse trail particles” on mouse move.
+  //Adds "mouse trail particles" on mouse move.
   initMouseParticles(particlesContainer);
 }
 
@@ -69,15 +68,16 @@ function initPixelSparkles(canvas) {
   // Used to adjust the background to different sized displays
   function resize() {
     const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.width  = Math.floor(window.innerWidth  * dpr);
     canvas.height = Math.floor(window.innerHeight * dpr);
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   // Calls resize when window is resized 
   window.addEventListener("resize", resize);
+  window.addEventListener("load", resize);
   resize();
 
   // Controls the size and rate of sparkles
@@ -97,8 +97,6 @@ function initPixelSparkles(canvas) {
     ctx.fillStyle = "rgba(0, 0, 0, 0.025)";
     ctx.fillRect(0, 0, w, h);
 
-
-    // 
     for (let x = 0; x < w; x += tile) {
       for (let y = 0; y < h; y += tile) {
         if (Math.random() < sparkleChance) {
@@ -115,9 +113,9 @@ function initPixelSparkles(canvas) {
     requestAnimationFrame(frame);
   }
 
-  // start
+  // Initial fill using canvas dimensions (DPR-scaled)
   ctx.fillStyle = "rgb(0, 0, 0)";
-  ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   requestAnimationFrame(frame);
 }
 
