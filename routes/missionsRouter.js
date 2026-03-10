@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const supabase = require("../middleware/supabase.js")
-const { getUID, checkAuth } = require("../middleware/auth.js");
+const { getUID, checkAuth, authenticateUser } = require("../middleware/auth.js");
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateUser ,async (req, res) => {
   checkAuth(req);
   const uid = await getUID(req);
 
