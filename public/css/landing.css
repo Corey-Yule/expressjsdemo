@@ -49,7 +49,8 @@
 }
 
 .diagonal {
-  fill: white;
+  fill: #111720;
+  opacity: 92%;
 }
 
 /* Get Started button */
