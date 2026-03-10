@@ -75,7 +75,7 @@
             <h2>Calorie Count — This Week</h2>
             <span class="chart-badge live">● Live</span>
           </div>
-          <canvas id="CalorieChart"></canvas>
+          <canvas class="bioCanvas" id="CalorieChart"></canvas>
         </div>
 
         <div class="chart-wrapper">
@@ -83,7 +83,7 @@
             <h2>Sleep Duration</h2>
             <span class="chart-badge">hrs / night</span>
           </div>
-          <canvas id="sleepChart"></canvas>
+          <canvas class="bioCanvas" id="sleepChart"></canvas>
         </div>
 
         <div class="chart-wrapper">
@@ -91,13 +91,18 @@
             <h2>Weekly Completion</h2>
             <span class="chart-badge">7-day view</span>
           </div>
-          <canvas id="pieChart"></canvas>
+          <canvas class="bioCanvas" id="pieChart"></canvas>
         </div>
 
       </div>
     </div>
 
     <!-- Chart.js -->
+    <script type="module">
+      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
+      generateNavBar();
+      generateBackground();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       const calsData   = <%- JSON.stringify(cals) %>;
@@ -109,10 +114,5 @@
         `<strong>${now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}</strong>Week View`;
     </script>
     <script src='/javascript/bio.js'></script>
-    <script type="module">
-      import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
-      generateNavBar();
-      generateBackground();
-    </script>
   </body>
 </html>

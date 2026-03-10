@@ -246,7 +246,7 @@ body {
   background: var(--accent3)0d;
 }
 
-canvas {
+.bioCanvas {
   max-height: 240px;
 }
 
