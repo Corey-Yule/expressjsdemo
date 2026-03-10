@@ -11,14 +11,18 @@
     <h2>Friends</h2>
     <ul class="list">
       <% for (const friend of friends) { %>
-        <li class="list-item">
-          <span>
-            <%= friend.user == username ? friend.friend : friend.user %>
-          </span>
+        <li class="list-item actions">
+          <span><%= friend.user == username ? friend.friend : friend.user %></span>
+          <form action="/biomarker/friend" method="post">
+            <button class="btn primary" type="submit" name="username" value="<%= friend.user == username ? friend.friend : friend.user %>">Profile</button>
+          </form>
+          <form action="/social/deleteFriend" method="post">
+            <button class="btn deny" type="submit" name="username" value="<%= friend.user == username ? friend.friend : friend.user %>">Delete</button>
+          </form>
         </li>
       <% } %>
     </ul>
-    <form class="add-friend" action="/test/addFriend" method="post">
+    <form class="add-friend" action="/social/addFriend" method="post">
       <input type="text" name="username" placeholder="Add friend by username" required />
       <button class="btn primary" type="submit">Add</button>
     </form>
@@ -29,11 +33,11 @@
         <li class="list-item actions">
           <span><%= request.user %></span>
 
-          <form action="/test/acceptRequest" method="post">
+          <form action="/social/acceptRequest" method="post">
             <button class="btn accept" type="submit" name="username" value="<%= request.user %>">Accept</button>
           </form>
 
-          <form action="/test/denyRequest" method="post">
+          <form action="/social/denyRequest" method="post">
             <button class="btn deny" type="submit" name="username" value="<%= request.user %>">Deny</button>
           </form>
         </li>

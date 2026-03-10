@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const supabase = require("../middleware/supabase.js")
-const { getUID } = require("../middleware/auth.js");
+const { getUID, checkAuth } = require("../middleware/auth.js");
+const { getUser } = require("../middleware/dbQuery.js")
 
 function getWeekRange() {
   const now = new Date();
@@ -17,8 +18,7 @@ function getWeekRange() {
   };
 }
 
-router.get('/', async (req, res) => {
-  const uid = await getUID(req);
+async function getBioData(uid) {
   const { start, end } = getWeekRange();
   const todayStr = new Date().toLocaleDateString('en-CA'); // gives YYYY-MM-DD in local time
 
@@ -50,7 +50,20 @@ router.get('/', async (req, res) => {
   console.log('rows dates:', rows.map(r => r.log_date));
   console.log('todayRow:', todayRow);
 
-  res.render('biomarker/index', { cals, sleep, weekly, today: todayRow });
+  return { cals, sleep, weekly, today: todayRow }
+}
+
+router.get('/', async (req, res) => {
+  checkAuth(req);
+  const uid = await getUID(req);
+
+  res.render('biomarker/index', await getBioData(uid));
 });
+
+router.post('/friend', async (req, res) => {
+  const user = await getUser(req.body.username) 
+
+  res.render('biomarker/index', await getBioData(user[0].id))
+})
 
 module.exports = router

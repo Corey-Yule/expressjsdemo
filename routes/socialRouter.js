@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getQuery, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends } = require('../middleware/dbQuery.js')
+const { getQuery, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends, deleteFriend } = require('../middleware/dbQuery.js')
 const { getUsername, redirectIfNotAuthenticated } = require('../middleware/auth.js')
 
 router.get('/', async (req, res) => {
@@ -9,25 +9,29 @@ router.get('/', async (req, res) => {
   const friends = await getFriends(req)
   const username = await getUsername(req)
 
-  getQuery()
-
   if (username) { res.render('social/index', { requests, friends, username }) }
 })
 
-router.post('/addFriend', (req, res) => {
-  addFriend(req)
+router.post('/addFriend', async (req, res) => {
+  await addFriend(req)
 
   res.redirect('/social')
 })
 
-router.post('/acceptRequest', (req, res) => {
-  acceptFriendReq(req)
+router.post('/acceptRequest', async (req, res) => {
+  await acceptFriendReq(req)
 
   res.redirect('/social')
 })
 
-router.post('/denyRequest', (req, res) => {
-  denyFriendReq(req)
+router.post('/denyRequest', async (req, res) => {
+  await denyFriendReq(req)
+
+  res.redirect('/social')
+})
+
+router.post('/deleteFriend', async (req, res) => {
+  await deleteFriend(req)
 
   res.redirect('/social')
 })

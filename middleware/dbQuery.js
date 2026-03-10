@@ -27,7 +27,7 @@ async function acceptFriendReq(req) {
   const { data, error } = await supabase
     .from('friends')
     .update({ accepted: true })
-    .match({ user: friend, friend: user })
+    .match({ user: friend[0].username, friend: user })
 
   if (error) { throw error }
 }
@@ -41,7 +41,7 @@ async function denyFriendReq(req) {
   const { data, error } = await supabase
     .from('friends')
     .delete()
-    .match({ user: friend, friend: user })
+    .match({ user: friend[0].username, friend: user })
 
   if (error) { throw error }
 }
@@ -71,7 +71,7 @@ async function addFriend(req) {
     const { data, error } = await supabase
       .from('friends')
       .insert([
-        { user: user, friend: friend }
+        { user: user, friend: friend[0].username }
       ])
   } catch (error) {
     console.error("unable to add friend")
@@ -84,18 +84,37 @@ async function areFriends(user, friend) {
   const { data, error } = await supabase
     .from('friends')
     .select("*", { count: "exact", head: true })
-    .or(`user.eq.${user}, friend.eq.${user}`)
-    .or(`user.eq.${friend}, friend.eq.${friend}`)
+    .eq('accepted', 'TRUE')
+    .or(`user.eq.${user}, friend.eq.${friend}`)
+    .or(`user.eq.${friend}, friend.eq.${user}`)
 
   if (error) { throw error }
 
   return data
 }
 
+async function deleteFriend(req) {
+  const user = await getUsername(req)
+  const friend = await getUser(req.body.username)
+
+  if (!friend || !user) { return }
+  
+  try {
+    const { data, error } = await supabase
+      .from('friends')
+      .delete()
+      .or(`and(user.eq.${user}, friend.eq.${friend[0].username}), and(user.eq.${friend[0].username}, friend.eq.${user})`)
+   
+    console.log(data)
+  } catch (error) {
+    console.error("Kill me now")
+  }
+}
+
 async function getUser(username) {
   const { data, error } = await supabase
     .from('profiles')
-    .select('username')
+    .select('*')
     .eq('username', username)
 
   if (error) { throw error }
@@ -120,4 +139,4 @@ async function getQuery(query) {
   console.log(user)
 }
 
-module.exports = { getQuery, getNumUsers, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends }
+module.exports = { getQuery, getNumUsers, addFriend, getFriendReqs, acceptFriendReq, denyFriendReq, getFriends, deleteFriend, getUser }
