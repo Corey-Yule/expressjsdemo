@@ -13,7 +13,6 @@
             <h1 class="leaderboard-title">Leaderboard</h1>
             <div class="leaderboard-top3">
 
-                <!-- 2nd place-->
                 <div class="podium podium-2">
                 <img src="/Images/2nd-place-avatar.png" 
                     alt="2nd place avatar" class="podium-avatar">
@@ -21,7 +20,6 @@
                     alt="2nd place podium" class="podium-image">
                 </div>
 
-                <!-- 1st place-->
                 <div class="podium podium-1">
                 <img src="/Images/1st-place-avatar.png" 
                     alt="1st place avatar" class="podium-avatar">
@@ -29,7 +27,6 @@
                     alt="1st place podium" class="podium-image">
                 </div>
 
-                <!-- 3rd place-->
                 <div class="podium podium-3">
                 <img src="/Images/3rd-place-avatar.png" 
                     alt="3rd place avatar" class="podium-avatar">
@@ -46,8 +43,7 @@
                 </div>
 
                 <div class="leaderboard-rows" id="leaderboard-rows">
-                    <!-- Inserted with JS -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -62,29 +58,21 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const data = [
-                { level: 50, username: 'Dave1', missions: 12 },
-                { level: 45, username: 'Dave2', missions: 10 },
-                { level: 42, username: 'Dave3', missions: 9 },                
-                { level: 40, username: 'Dave4', missions: 8 },
-                { level: 38, username: 'Dave5', missions: 7 },    
-                { level: 35, username: 'Dave6', missions: 6 }
-        ];
+            // EJS injects the live database array here!
+            const data = <%- JSON.stringify(leaderboardData) %>;
         
-        const container = document.getElementById('leaderboard-rows');
+            const container = document.getElementById('leaderboard-rows');
 
-        data.forEach(entry => {
-            const row = document.createElement('div');
-            row.className = 'leaderboard-row';
-            row.innerHTML =
-            '<span>' + entry.level + '</span>' +
-            '<span>' + entry.username + '</span>' +
-            '<span>' + entry.missions + '</span>';
-            container.appendChild(row);
+            data.forEach(entry => {
+                const row = document.createElement('div');
+                row.className = 'leaderboard-row';
+                row.innerHTML =
+                '<span>' + entry.level + '</span>' +
+                '<span>' + entry.username + '</span>' +
+                '<span>' + entry.missions + '</span>';
+                container.appendChild(row);
+            });
         });
-    });
     </script>    
 </body>
 </html>
-
-

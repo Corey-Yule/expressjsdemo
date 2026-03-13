@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const supabase = require("../middleware/supabase.js")
-const { getUID, checkAuth, authenticateUser} = require("../middleware/auth.js");
+const { authenticateUser } = require("../middleware/auth.js");
 
 function getWeekRange() {
   const now = new Date();
@@ -18,12 +18,13 @@ function getWeekRange() {
 }
 
 router.get('/', authenticateUser, async (req, res) => {
-  checkAuth(req);
-  const uid = await getUID(req);
+  // 1. Grab the guaranteed UID from the middleware to prevent dropped connections
+  const uid = req.user.id; 
+  if (!uid) return res.redirect('/login');
+
   const { start, end } = getWeekRange();
   const todayStr = new Date().toLocaleDateString('en-CA'); 
 
-  // Add a third query for the mission_completions table
   const [
     { data: dailyData, error: e1 }, 
     { data: weeklyData, error: e2 },
@@ -56,12 +57,13 @@ router.get('/', authenticateUser, async (req, res) => {
   const weekly = weeklyData ?? {};
   const todayRow = rows.find(row => row.log_date === todayStr) ?? {};
 
-  // -- NEW: Mission Logic --
-  const missionsComplete = missionData?.missions_complete || 0;
-  const level = missionData?.level || 1;
-  const username = missionData?.username || 'Player'; // Fallback if no username
+  const missionsComplete = missionData?.missions_complete ?? 0;
+  //Check incase its being stupid
+  const level = missionData?.level ?? 1; 
+  
+  const username = missionData?.username || req.user.user_metadata?.username || 'Player'; 
 
-  // Calculate progress for the progress bar (modulo 2 gets the remainder)
+  // Calculate progress for the progress bar
   const missionsTowardsNextLevel = missionsComplete % 2; 
   const progressPercent = (missionsTowardsNextLevel / 2) * 100;
 
@@ -72,7 +74,6 @@ router.get('/', authenticateUser, async (req, res) => {
       progressPercent: progressPercent
   };
 
-  // Pass missionStats into the render object
   res.render('home/index', { cals, sleep, weekly, today: todayRow, missionStats });
 });
 

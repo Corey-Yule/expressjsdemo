@@ -11,7 +11,7 @@ router.get('/', authenticateUser ,async (req, res) => {
   const { data: missions, error } = await supabase
     .from('mission_completions')
     .select('username, missions_complete')
-    .eq('player_uuid', uid); // Match the column name in your DB
+    .eq('player_uuid', uid); // Match the column name in the DB
 
   if (error) {
     console.error("Supabase Error:", error.message);
@@ -25,7 +25,7 @@ router.get('/', authenticateUser ,async (req, res) => {
   
   console.log("Missions completed by user:", missionList);
 
-  // Pass the data to your EJS/Pug view
+  // Pass the data to the EJS view
   res.render('missions/index', { 
     missions: rows,
     missionList: missionList 
