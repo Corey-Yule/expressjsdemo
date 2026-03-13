@@ -13,20 +13,44 @@ router.get("/",  redirectIfAuthenticated, (req, res) => {
 
 router.post("/loginAccount", async (req, res) => {
   try {
+    const identifier = req.body.identifier; // From the updated HTML form
+    const password = req.body.password;
+    let loginEmail = identifier;
+
+    // 1. Check if the input is an email or a username
+    const isEmail = identifier.includes('@');
+
+    // 2. If it's a username, look up the corresponding email in the profiles table
+    if (!isEmail) {
+      const { data: userProfile, error: profileError } = await supabase
+        .from("profiles")
+        .select("email") // We need to fetch the email associated with this username
+        .eq("username", identifier)
+        .single();
+
+      // If no profile is found or there's an error, reject the login
+      if (profileError || !userProfile || !userProfile.email) {
+        return res.render("login/index", {
+          error: "Invalid username or password",
+          activeForm: "loginForm",
+          formData: req.body
+        });
+      }
+
+      // Reassign the email we found in the database so Supabase can use it
+      loginEmail = userProfile.email; 
+    }
+
+    // 3. Authenticate with Supabase using the resolved email
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: req.body.email_addr,
-      password: req.body.password,
-      options: {
-        data: {
-          username: req.body.username,
-        },   
-      },
+      email: loginEmail,
+      password: password,
     });
 
     if (error) {
       console.error("Login error:", error);
       return res.render("login/index", {
-        error: error.message,
+        error: "Invalid username or password", // Use a generic message for security
         activeForm: "loginForm",
         formData: req.body
       });
@@ -35,7 +59,7 @@ router.post("/loginAccount", async (req, res) => {
     // Store session tokens in HTTP-only cookies
     res.cookie('sb-access-token', data.session.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // only HTTPS in production
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
