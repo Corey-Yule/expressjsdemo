@@ -7,102 +7,72 @@
     <title>Home</title>
 </head>
 <body>
-    <main class="main-content">
-        <div class="home-page">
-
-            <!-- Player name -->
-            <h1 class="player-name">John</h1>
-
-            <div class="home-layout">
-                <div class="character-wrapper">
-                    <img src="/Images/1st-place-avatar.png"
-                        alt="Player sprite"
-                        class="character-sprite">
-                </div>
-
-                <div class="stats-card">
-                    <div class="stat-row">
-                        <div class="stat-icon">
-                            <img src="/Images/icon-fire.png"
-                                alt="Calories">
-                        </div>
-                        <div class="stat-text">
-                            <span class="stat-value"
-                                id="stat-calories"><%= today.calories ?? '--' %></span>
-                                <span class="stat-label">Kcal</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-row">
-                        <div class="stat-icon">
-                            <img src="/Images/icon-sleep.png"
-                                alt="Sleep">
-                        </div>
-                        <div class="stat-text">
-                            <span class="stat-value"
-                                id="stat-sleep"><%= today.sleep_hours ?? '--' %></span>
-                                <span class="stat-label">Sleep</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-row">
-                        <div class="stat-icon">
-                            <img src="/Images/icon-weight.png"
-                                alt="Weight">
-                        </div>
-                        <div class="stat-text">
-                            <span class="stat-value"
-                                id="stat-weight"><%= today.weight ?? '--' %></span>
-                                <span class="stat-label">Kg</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-row">
-                        <div class="stat-icon">
-                            <img src="/Images/icon-steps.png"
-                                alt="Steps">
-                        </div>
-                        <div class="stat-text">
-                            <span class="stat-value"
-                                id="stat-steps"><%= today.step_count ?? '--' %></span>
-                                <span class="stat-label">Steps</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-row">
-                        <div class="stat-icon">
-                            <img src="/Images/icon-water.png"
-                                alt="Water">
-                        </div>
-                        <div class="stat-text">
-                            <span class="stat-value"
-                                id="stat-water"><%= today.water_intake ?? '--' %>(L)</span>
-                                <span class="stat-label">Water</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Label and Progress bar -->
-            <div class="level-section">
-                <div class="level-labels">
-                    <div class="level-main">
-                        <span class="level-number"
-                        id="level-number">100</span>
-                        <span class="level-text">Level</span>
-                    </div>
-                    <div class="level-progress-text">
-                        <span id="level-progress-text">25/100</span>
-                    </div>
-                </div>
-
-                <div class="level bar">
-                    <div class="level-bar-fill"
-                        id="level-bar-fill"></div>
-                </div>
+    <div class="profile-card">
+    
+   <div class="card-header">
+        <div class="avatar-container">
+            <img src="/Images/1st-place-avatar.png" alt="Player sprite" class="character-sprite">
+        </div>
+        <div class="user-info">
+            <h1 class="player-name"><%= missionStats.username %></h1>
+            <div class="level-badge">
+                <span class="level-text">Lv.</span>
+                <span class="level-number" id="level-number"><%= missionStats.level %></span>
             </div>
         </div>
-    </main>
+    </div>
+
+    <div class="progress-section">
+        <div class="level-progress-text">
+            <span id="level-progress-text"><%= missionStats.progressText %></span>
+        </div>
+        <div class="level-bar">
+            <div class="level-bar-fill" id="level-bar-fill" style="width: <%= missionStats.progressPercent %>%;"></div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-item">
+            <img src="/Images/Burger.png" alt="Calories" class="stat-icon">
+            <div class="stat-details">
+                <span class="stat-value" id="stat-calories"><%= today.calories ?? '--' %></span>
+                <span class="stat-label">Kcal</span>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <img src="/Images/Bed.png" alt="Sleep" class="stat-icon">
+            <div class="stat-details">
+                <span class="stat-value" id="stat-sleep"><%= today.sleep_hours ?? '--' %></span>
+                <span class="stat-label">Sleep</span>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <img src="/Images/Kettle.png" alt="Weight" class="stat-icon">
+            <div class="stat-details">
+                <span class="stat-value" id="stat-weight"><%= today.weight ?? '--' %></span>
+                <span class="stat-label">Kg</span>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <img src="/Images/Tread.png" alt="Steps" class="stat-icon">
+            <div class="stat-details">
+                <span class="stat-value" id="stat-steps"><%= today.step_count ?? '--' %></span>
+                <span class="stat-label">Steps</span>
+            </div>
+        </div>
+
+        <div class="stat-item">
+            <img src="/Images/Water.png" alt="Water" class="stat-icon">
+            <div class="stat-details">
+                <span class="stat-value" id="stat-water"><%= today.water_intake ?? '--' %></span>
+                <span class="stat-label">Water(L)</span>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="/javascript/htmx.min.js">
     </script>

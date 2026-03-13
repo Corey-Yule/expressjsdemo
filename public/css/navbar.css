@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* =====================
+   PROTECTION RESET
+===================== */
+/* This forces the navbar to ignore the page's global CSS */
+.navBar, .navBar *, .hamburger, .hamburger * {
+  box-sizing: border-box;
+}
+
+/* =====================
    SIDEBAR BASE
 ===================== */
 
@@ -19,7 +27,7 @@
   background-color: #111111;
   padding: 16px 12px;
 
-  z-index: 100;
+  z-index: 9999; /* Boosted to ensure it stays above dashboard charts */
   transition: transform 0.3s ease;
 }
 
@@ -59,8 +67,10 @@
   align-items: center;
 
   width: 85%;
-  height: 2.5%;
+  height: auto;
+  min-height: 45px;
   padding: 12px 14px;
+  flex-shrink: 0; /* Prevents flexbox from squishing the buttons */
 
   border: 1px solid rgba(255, 255, 255, 0.9);
   background: rgba(255, 255, 255, 0.06);
@@ -122,7 +132,7 @@
   border: none;
   cursor: pointer;
 
-  z-index: 200;
+  z-index: 10000; /* Must be higher than navBar */
 }
 
 .hamburger span {
@@ -171,7 +181,9 @@
   .nButton {
     font-size: 9px;
     padding: 10px 12px;
-    height: 5%;
+    /* Replaced 5% with auto + min-height */
+    height: auto;
+    min-height: 40px; 
   }
 }
 
@@ -191,6 +203,8 @@
 
   .nButton {
     font-size: 8px;
-    height: 5%;
+    /* Replaced 5% with auto + min-height */
+    height: auto;
+    min-height: 35px;
   }
 }

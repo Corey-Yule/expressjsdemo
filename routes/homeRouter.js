@@ -5,9 +5,9 @@ const { getUID, checkAuth, authenticateUser} = require("../middleware/auth.js");
 
 function getWeekRange() {
   const now = new Date();
-  const day = now.getDay(); // 0 = Sunday, 1 = Monday...
+  const day = now.getDay(); 
   const monday = new Date(now);
-  monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1)); // roll back to Monday
+  monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1)); 
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
 
@@ -17,13 +17,18 @@ function getWeekRange() {
   };
 }
 
-router.get('/', authenticateUser ,async (req, res) => {
+router.get('/', authenticateUser, async (req, res) => {
   checkAuth(req);
   const uid = await getUID(req);
   const { start, end } = getWeekRange();
-  const todayStr = new Date().toLocaleDateString('en-CA'); // gives YYYY-MM-DD in local time
+  const todayStr = new Date().toLocaleDateString('en-CA'); 
 
-  const [{ data: dailyData, error: e1 }, { data: weeklyData, error: e2 }] = await Promise.all([
+  // Add a third query for the mission_completions table
+  const [
+    { data: dailyData, error: e1 }, 
+    { data: weeklyData, error: e2 },
+    { data: missionData, error: e3 }
+  ] = await Promise.all([
     supabase.from('health_daily_logs')
       .select('calories, sleep_hours, log_date, water_intake, step_count, weight')
       .eq('user_id', uid)
@@ -35,23 +40,40 @@ router.get('/', authenticateUser ,async (req, res) => {
       .select('calories_sum, sleep_hours_avg, sleep_hours_sum, days_logged')
       .eq('user_id', uid)
       .eq('week_start', start)
+      .maybeSingle(),
+      
+    supabase.from('mission_completions')
+      .select('missions_complete, level, username')
+      .eq('player_uuid', uid)
       .maybeSingle()
   ]);
 
-  if (e1 || e2) console.error('Supabase error:', e1 || e2);
+  if (e1 || e2 || e3) console.error('Supabase error:', e1 || e2 || e3);
 
   const rows  = dailyData ?? [];
   const cals  = rows.map(row => row.calories);
   const sleep = rows.map(row => row.sleep_hours);
   const weekly = weeklyData ?? {};
-
-  // Find today's row specifically for the stat cards
   const todayRow = rows.find(row => row.log_date === todayStr) ?? {};
-  console.log('todayStr:', todayStr);
-  console.log('rows dates:', rows.map(r => r.log_date));
-  console.log('todayRow:', todayRow);
 
-  res.render('home/index', { cals, sleep, weekly, today: todayRow });
+  // -- NEW: Mission Logic --
+  const missionsComplete = missionData?.missions_complete || 0;
+  const level = missionData?.level || 1;
+  const username = missionData?.username || 'Player'; // Fallback if no username
+
+  // Calculate progress for the progress bar (modulo 2 gets the remainder)
+  const missionsTowardsNextLevel = missionsComplete % 2; 
+  const progressPercent = (missionsTowardsNextLevel / 2) * 100;
+
+  const missionStats = {
+      username: username,
+      level: level,
+      progressText: `${missionsTowardsNextLevel}/2 Missions`,
+      progressPercent: progressPercent
+  };
+
+  // Pass missionStats into the render object
+  res.render('home/index', { cals, sleep, weekly, today: todayRow, missionStats });
 });
 
-module.exports = router
+module.exports = router;

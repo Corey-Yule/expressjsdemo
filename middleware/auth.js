@@ -1,35 +1,38 @@
 const supabase = require("./supabase.js");
 //Supabase Docs
 
-async function getUsername(req) {
-  const accessToken = req.cookies['sb-access-token']
+// Change getUID to use the user object already attached to the request by the middleware
+async function getUID(req) {
+  // If authenticateUser already ran, the user is in req.user
+  if (req.user) return req.user.id; 
 
-  if (!accessToken) { return null }
+  const accessToken = req.cookies['sb-access-token'];
+  if (!accessToken) return null;
 
   try {
     const { data: { user }, error } = await supabase.auth.getUser(accessToken);
-
-    return user.user_metadata.username ? user.user_metadata.username : null
+    if (error || !user) return null;
+    
+    // Use user.id (this is the standard Supabase UUID)
+    return user.id; 
   } catch (error) {
-    console.error("middleware issue or not logged in")
-
-    return 
+    console.error("UID retrieval issue:", error);
+    return null;
   }
 }
 
-async function getUID(req) {
-  const accessToken = req.cookies['sb-access-token']
+// Same for username
+async function getUsername(req) {
+  if (req.user) return req.user.user_metadata.username || null;
 
-  if (!accessToken) { return null }
+  const accessToken = req.cookies['sb-access-token'];
+  if (!accessToken) return null;
 
   try {
     const { data: { user }, error } = await supabase.auth.getUser(accessToken);
-    
-    return user.user_metadata.sub
+    return user?.user_metadata?.username || null;
   } catch (error) {
-    console.error("middleware issue or not logged in")
-
-    return 
+    return null;
   }
 }
 
