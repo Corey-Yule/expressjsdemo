@@ -4,7 +4,7 @@
   --surface:   #0d1117;
   --card:      #111720;
   --border:    #1e2a38;
-  --accent:    #00e5ff;
+  --accent:    #0081DC;
   --accent2:   #7b61ff;
   --accent3:   #00ff9d;
   --danger:    #ff4d6d;
@@ -80,6 +80,119 @@ body {
   grid-template-columns: repeat(5, 1fr);
   gap: 14px;
   margin-bottom: 24px;
+}
+/* ── Log Section ── */
+.log-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px 26px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.5s ease 0.1s both;
+  transition: border-color 0.25s ease;
+}
+
+.log-section:hover {
+  border-color: #2a3a50; /* Matches the chart-wrapper hover state */
+}
+
+.log-section h2 {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* ── Form Grid ── */
+.log-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: end; /* Aligns the submit button with the bottom of the inputs */
+}
+
+@media (max-width: 1000px) {
+  .log-form { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .log-form { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 450px) {
+  .log-form { grid-template-columns: 1fr; }
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+
+/* ── Inputs ── */
+.form-row input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 12px 14px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+}
+
+.form-row input::placeholder {
+  color: #3a4a5e; /* Slightly darker than muted for placeholders */
+}
+
+/* Inverts the dark calendar icon to white so it's visible on dark backgrounds */
+.form-row input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.form-row input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* ── Submit Button ── */
+.btn-submit {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 44px; /* Matches the height of the inputs */
+}
+
+.btn-submit:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
 }
 
 @media (max-width: 1100px) { .bio-stats { grid-template-columns: repeat(3, 1fr); } }
