@@ -126,3 +126,25 @@ body {
 .mission-card:hover {
   transform: translateY(-2px);
 }
+
+.missions-button-wrapper {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.new-missions-button {
+  background: #0b1f35;
+  color: #00a2ff;
+  border: 2px solid #00a2ff;
+  border-radius: 14px;
+  padding: 14px 24px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.new-missions-button:hover {
+  background: #00a2ff;
+  color: black;
+}

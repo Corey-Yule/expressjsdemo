@@ -16,41 +16,21 @@
         <h1 class="missions-title">Missions</h1>
         <section class="missions-section">
           <h2 class="mission-title">Daily</h2>
-          <ul class="mission-list">
-            <li class="mission-card done">
-              <span class="mission-icon">✓</span>
-              <span class="mission-text">Walk 6000 steps</span>
-            </li>
-            <li class="mission-card not-done">
-              <span class="mission-icon">✕</span>
-              <span class="mission-text">Drink 2L of water</span>
-            </li>
-            <li class="mission-card not-done">
-              <span class="mission-icon">✕</span>
-              <span class="mission-text">Score 80+ stress</span>
-            </li>
-          </ul>
+          <ul class="mission-list" id="daily-missions"></ul>
         </section>
 
         <section class="missions-section">
           <h2 class="mission-title">Weekly</h2>
-          <ul class="mission-list">
-            <li class="mission-card done">
-              <span class="mission-icon">✓</span>
-              <span class="mission-text">Get 3000 steps daily</span>
-            </li>
-            <li class="mission-card not-done">
-              <span class="mission-icon">✕</span>
-              <span class="mission-text">Burn 1000 Kcal</span>
-            </li>
-            <li class="mission-card not-done">
-              <span class="mission-icon">✕</span>
-              <span class="mission-text">Average 80+ stress</span>
-            </li>
-          </ul>
+          <ul class="mission-list" id="weekly-missions"></ul>
         </section>
+
+        </div>
+        <div class="missions-button-wrapper">
+         <button id="new-missions-btn" class="new-missions-btn" style="display:none;">
+            Generate New Missions
+         </button>
+        </div>
       </div>
-    </div>
   </main>
 
       <!--JavaScript-->
@@ -60,5 +40,6 @@
       generateBackground();
       generateNavBar()
       </script>
+    <script src="/javascript/missions.js"></script>
     </body>
   </html>
