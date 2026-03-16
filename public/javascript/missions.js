@@ -1,4 +1,3 @@
-const { all } = require("express/lib/application");
 
 const dailyMissionsList = [
     "Walk 10,000 steps",
