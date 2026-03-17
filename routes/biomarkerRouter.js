@@ -81,15 +81,14 @@ router.get('/', authenticateUser , async (req, res) => {
   const uid = await getUID(req);
   const data = await getBioData(uid)
 
-  res.render('biomarker/index', data);
+  res.render('biomarker/index', Object.assign(data, { isFriend: false }));
 });
 
 router.post('/friend', async (req, res) => {
   const user = await getUser(req.body.username) 
   const data = await getBioData(user[0].id)
 
-
-  res.render('biomarker/index', data)
+  res.render('biomarker/index', Object.assign(data, { isFriend: true }))
 })
 
 // Route to handle saving new daily logs
