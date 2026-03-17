@@ -113,9 +113,6 @@ function initPixelSparkles(canvas) {
     requestAnimationFrame(frame);
   }
 
-  // Initial fill using canvas dimensions (DPR-scaled)
-  ctx.fillStyle = "rgb(0, 0, 0)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
   requestAnimationFrame(frame);
 }
 
