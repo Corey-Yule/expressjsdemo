@@ -18,38 +18,42 @@ function getWeekRange() {
 }
 
 router.get('/', authenticateUser, async (req, res) => {
-  // 1. Grab the guaranteed UID from the middleware to prevent dropped connections
   const uid = req.user.id; 
   if (!uid) return res.redirect('/login');
 
   const { start, end } = getWeekRange();
   const todayStr = new Date().toLocaleDateString('en-CA'); 
-
   const [
-    { data: dailyData, error: e1 }, 
-    { data: weeklyData, error: e2 },
-    { data: missionData, error: e3 }
-  ] = await Promise.all([
-    supabase.from('health_daily_logs')
-      .select('calories, sleep_hours, log_date, water_intake, step_count, weight')
-      .eq('user_id', uid)
-      .gte('log_date', start)
-      .lte('log_date', end)
-      .order('log_date', { ascending: true }),
+      { data: dailyData, error: e1 }, 
+      { data: weeklyData, error: e2 },
+      { data: missionData, error: e3 }
+    ] = await Promise.all([
+      supabase.from('health_daily_logs')
+        .select('calories, sleep_hours, log_date, water_intake, step_count, weight')
+        .eq('user_id', uid)
+        .gte('log_date', start)
+        .lte('log_date', end)
+        .order('log_date', { ascending: true }),
 
-    supabase.from('health_weekly_summary')
-      .select('calories_sum, sleep_hours_avg, sleep_hours_sum, days_logged')
-      .eq('user_id', uid)
-      .eq('week_start', start)
-      .maybeSingle(),
-      
-    supabase.from('mission_completions')
-      .select('missions_complete, level, username')
-      .eq('player_uuid', uid)
-      .maybeSingle()
+      supabase.from('health_weekly_summary')
+        .select('calories_sum, sleep_hours_avg, sleep_hours_sum, days_logged')
+        .eq('user_id', uid)
+        .eq('week_start', start)
+        .maybeSingle(),
+        
+      supabase.from('mission_completions')
+        .select('missions_complete, level, username')
+        .eq('player_uuid', uid)
+        .maybeSingle()
   ]);
 
-  if (e1 || e2 || e3) console.error('Supabase error:', e1 || e2 || e3);
+  // Isolate each error so I know exactly what failed
+  if (e1) console.error('Supabase Daily Logs Error:', e1);
+  if (e2) console.error('Supabase Weekly Summary Error:', e2);
+  if (e3) {
+      console.error('Supabase Mission Data Error for UID:', uid);
+      console.error(e3);
+  }
 
   const rows  = dailyData ?? [];
   const cals  = rows.map(row => row.calories);
@@ -57,13 +61,14 @@ router.get('/', authenticateUser, async (req, res) => {
   const weekly = weeklyData ?? {};
   const todayRow = rows.find(row => row.log_date === todayStr) ?? {};
 
+  if (!missionData && !e3) {
+      console.warn(`No mission data found in DB for user: ${uid}`);
+  }
+
   const missionsComplete = missionData?.missions_complete ?? 0;
-  //Check incase its being stupid
   const level = missionData?.level ?? 1; 
-  
   const username = missionData?.username || req.user.user_metadata?.username || 'Player'; 
 
-  // Calculate progress for the progress bar
   const missionsTowardsNextLevel = missionsComplete % 2; 
   const progressPercent = (missionsTowardsNextLevel / 2) * 100;
 

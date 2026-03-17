@@ -76,17 +76,20 @@ async function getBioData(uid) {
   return { cals, sleep, weekly, today: todayRow }
 }
 
-router.get('/', authenticateUser ,async (req, res) => {
+router.get('/', authenticateUser , async (req, res) => {
   checkAuth(req);
   const uid = await getUID(req);
+  const data = await getBioData(uid)
 
-  res.render('biomarker/index', await getBioData(uid));
+  res.render('biomarker/index', data);
 });
 
 router.post('/friend', async (req, res) => {
   const user = await getUser(req.body.username) 
+  const data = await getBioData(user[0].id)
 
-  res.render('biomarker/index', await getBioData(user[0].id))
+
+  res.render('biomarker/index', data)
 })
 
 // Route to handle saving new daily logs
