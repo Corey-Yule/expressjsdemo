@@ -17,7 +17,7 @@ router.get('/', authenticateUser, async (req, res) => {
     }
 
     // Format the data (so it matches the front end cause I love life)
-    const formattedData = (leaderboardData || []).map(player => ({
+    const formattedData = (await leaderboardData || []).map(player => ({
         level: player.level || 0,
         username: player.username || 'Unknown Player',
         missions: player.missions_complete || 0
