@@ -26,6 +26,8 @@
 
       <input type="text" id="login-identifier" name="identifier" placeholder="Email or Username" required />
       <input type="password" id="login-password" name="password" placeholder="Password" required />
+      <input type="checkbox" id="login-toggle" class="show-psw" onclick="myFunction()">
+      <label for="login-toggle" class="show-password-button">Show Password</label>
       <button type="submit">Login</button>
       <button type="button" id="github">Login with GitHub</button>
     </form>
@@ -41,6 +43,8 @@
       <input type="text" id="username" name="username" placeholder="Username" value="<%= typeof formData !== 'undefined' && activeForm == 'signupForm' && formData.username ? formData.username : '' %>" required />
       <input type="email" id="signup-email" name="email_addr" placeholder="Email" value="<%= typeof formData !== 'undefined' && activeForm == 'signupForm' && formData.email_addr ? formData.email_addr : '' %>" required />
       <input type="password" id="signup-password" name="password" placeholder="Password" required />
+      <input type="checkbox" id="signup-toggle" class="show-psw" onclick="myFunction()">
+      <label for="signup-toggle" class="show-password-button">Show Password</label>
       <button type="submit" id="submit-info">Sign Up</button>
     </form>
   </div>

@@ -26,3 +26,26 @@ signupBtn.addEventListener('click', () => {
   signupBtn.classList.add('active');
   loginBtn.classList.remove('active');
 });
+
+// Grab the elements for the Login form
+const loginToggle = document.getElementById('login-toggle');
+const loginPassword = document.getElementById('login-password');
+
+// Add listener for the Login toggle
+if (loginToggle && loginPassword) {
+    loginToggle.addEventListener('change', function() {
+        // If the checkbox is checked, show text. Otherwise, hide it.
+        loginPassword.type = this.checked ? 'text' : 'password';
+    });
+}
+
+// Grab the elements for the Sign Up form
+const signupToggle = document.getElementById('signup-toggle');
+const signupPassword = document.getElementById('signup-password');
+
+// Add listener for the Sign Up toggle
+if (signupToggle && signupPassword) {
+    signupToggle.addEventListener('change', function() {
+        signupPassword.type = this.checked ? 'text' : 'password';
+    });
+}
