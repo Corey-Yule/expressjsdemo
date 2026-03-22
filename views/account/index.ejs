@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/acc.css">
   <title>Account Settings</title>
 </head>
 <body>
@@ -57,20 +58,68 @@
           <button type="submit">Logout</button>
         </form>
       </div>
-      <!--<p class="info-text">Warning: This action cannot be undone. All your data will be permanently deleted.</p>-->
+
       <div class="setting-item">
-        <form action="/account/delete" method="POST" style="margin: 0;">
-          <button class="danger" onclick="deleteAccount()" >Delete Account</button>
+        <!-- Button now triggers the modal instead of submitting directly -->
+        <button class="danger" onclick="openDeleteModal()">Delete Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <div class="modal-icon">⚠️</div>
+      <h2>Delete Your Account?</h2>
+      <p>
+        This action is <strong>permanent and cannot be undone.</strong><br>
+        All your data will be deleted immediately.<br><br>
+        Type <strong>DELETE</strong> below to confirm.
+      </p>
+      <div class="modal-confirm-row">
+        <input
+          type="text"
+          id="deleteConfirmInput"
+          placeholder='Type "DELETE" to confirm'
+          oninput="checkDeleteInput()"
+        >
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+        <form action="/account/delete" method="POST" style="flex:1; margin:0;">
+          <button class="btn-delete" id="confirmDeleteBtn" type="submit" disabled>Delete Account</button>
         </form>
       </div>
     </div>
   </div>
-    <!--Scripts-->
-    <script type="module">
-      import { generateBackground, generateNavBar } from '/javascript/components/controller.js';
-      
-      generateNavBar()
-      generateBackground();
-    </script>
+
+  <script>
+    function openDeleteModal() {
+      document.getElementById('deleteConfirmInput').value = '';
+      document.getElementById('confirmDeleteBtn').disabled = true;
+      document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+    }
+
+    function checkDeleteInput() {
+      const val = document.getElementById('deleteConfirmInput').value;
+      document.getElementById('confirmDeleteBtn').disabled = (val !== 'DELETE');
+    }
+
+    // Close modal if user clicks outside it
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+      if (e.target === this) closeDeleteModal();
+    });
+  </script>
+
+  <!--Scripts-->
+  <script type="module">
+    import { generateBackground, generateNavBar } from '/javascript/components/controller.js';
+    generateNavBar();
+    generateBackground();
+  </script>
 </body>
 </html>

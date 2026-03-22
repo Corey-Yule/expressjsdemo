@@ -1,0 +1,117 @@
+
+/* Delete confirmation modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: #1e2128;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    border-radius: 15px;
+    padding: 35px 30px;
+    width: 420px;
+    max-width: 90vw;
+    box-shadow: 0 0 40px rgba(255, 77, 77, 0.15);
+    text-align: center;
+    animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.modal h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.modal p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.modal p strong {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.modal-confirm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-confirm-row input[type="text"] {
+    flex: 1;
+    padding: 9px 14px;
+    border: 1px solid rgba(255, 77, 77, 0.4);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.07);
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.modal-confirm-row input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-delete {
+    background: rgba(255, 77, 77, 0.25);
+    color: #ff4d4d;
+}
+
+.btn-delete:hover:not(:disabled) {
+    background: #ff4d4d;
+    color: #fff;
+}
+
+.btn-delete:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
