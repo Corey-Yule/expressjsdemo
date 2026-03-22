@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/login.css">
+  <title>Verify Your Email</title>
+  <style>
+    .verify-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      background: rgba(70, 230, 230, 0.05);
+      padding: 45px 40px;
+      border-radius: 15px;
+      width: 380px;
+      max-width: 90vw;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .verify-icon {
+      font-size: 56px;
+      margin-bottom: 18px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .verify-container h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .verify-container p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .verify-container p strong {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 24px 0;
+    }
+
+    .resend-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .resend-row p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #fff;
+      box-sizing: border-box;
+    }
+
+    .btn-primary {
+      background: #5170ff;
+    }
+
+    .btn-primary:hover {
+      background: #667eea;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-ghost:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .resend-timer {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      min-height: 18px;
+    }
+
+    .success-flash {
+      display: none;
+      font-size: 13px;
+      color: #4dff88;
+      margin-top: 4px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* ===== Mobile ===== */
+    @media (max-width: 480px) {
+      .verify-container {
+        width: 90%;
+        padding: 35px 25px;
+      }
+
+      .verify-icon {
+        font-size: 48px;
+      }
+
+      .verify-container h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="Title">
+    <h1>GitHealthy Account</h1>
+  </div>
+
+  <div class="verify-container">
+    <span class="verify-icon">📬</span>
+    <h1>Check Your Email</h1>
+    <p>
+      We've sent a verification link to<br>
+      <!-- Populate with server-side email if available -->
+      <strong><%= typeof email !== 'undefined' ? email : 'your email address' %></strong>
+    </p>
+    <p>Click the link in the email to activate your account. It may take a minute or two to arrive.</p>
+
+    <hr class="divider">
+
+    <div class="resend-row">
+      <p>Didn't receive it? Check your spam folder or resend below.</p>
+
+      <!-- Resend form — POST to your resend-verification route -->
+      <form action="/login/resend-verification" method="POST" style="width:100%; margin:0;" onsubmit="startCooldown(event)">
+        <input type="hidden" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>">
+        <button class="btn btn-ghost" id="resend-btn" type="submit">Resend Email</button>
+      </form>
+
+      <span class="resend-timer" id="resend-timer"></span>
+      <span class="success-flash" id="resend-success">✔ Verification email resent!</span>
+    </div>
+
+    <a href="/login" class="back-link">← Back to Login</a>
+  </div>
+
+  <script>
+    const COOLDOWN_SECONDS = 60;
+
+    function startCooldown(e) {
+      const btn   = document.getElementById('resend-btn');
+      const timer = document.getElementById('resend-timer');
+      const flash = document.getElementById('resend-success');
+
+      // Show success flash
+      flash.style.display = 'block';
+      setTimeout(() => { flash.style.display = 'none'; }, 3000);
+
+      // Disable button for cooldown
+      btn.disabled = true;
+      let remaining = COOLDOWN_SECONDS;
+
+      timer.textContent = `You can resend in ${remaining}s`;
+
+      const interval = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(interval);
+          btn.disabled = false;
+          timer.textContent = '';
+        } else {
+          timer.textContent = `You can resend in ${remaining}s`;
+        }
+      }, 1000);
+    }
+  </script>
+
+  <!--Scripts-->
+  <script type="module">
+    import { generateBackground, generateNavBar } from '/javascript/components/controller.js';
+    generateNavBar();
+    generateBackground();
+  </script>
+</body>
+</html>

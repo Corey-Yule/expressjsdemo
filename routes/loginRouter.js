@@ -3,32 +3,59 @@ const router = express.Router();
 const supabase = require("../middleware/supabase.js")
 const { redirectIfAuthenticated } = require("../middleware/auth.js");
 
-router.get("/",  redirectIfAuthenticated, (req, res) => {
+router.get("/", redirectIfAuthenticated, (req, res) => {
   res.render("login/index", {
-    activeForm: "loginForm", // Set default
+    activeForm: "loginForm",
     error: null,
     formData: {}
   });
 });
 
+// ─── Verify Email Page ────────────────────────────────────────────────────────
+router.get("/verify-email", (req, res) => {
+  const email = req.query.email || null;
+  res.render("login/verify-email", { email });
+});
+
+// ─── Resend Verification Email ────────────────────────────────────────────────
+router.post("/resend-verification", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.redirect("/login/verify-email?error=missing-email");
+  }
+
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+  });
+
+  if (error) {
+    console.error("Resend verification error:", error);
+    // Redirect back with the email preserved — client handles UI feedback
+    return res.redirect(`/login/verify-email?email=${encodeURIComponent(email)}&error=resend-failed`);
+  }
+
+  console.log("Verification email resent to:", email);
+  res.redirect(`/login/verify-email?email=${encodeURIComponent(email)}&resent=true`);
+});
+
+// ─── Login ────────────────────────────────────────────────────────────────────
 router.post("/loginAccount", async (req, res) => {
   try {
-    const identifier = req.body.identifier; // From the updated HTML form
+    const identifier = req.body.identifier;
     const password = req.body.password;
     let loginEmail = identifier;
 
-    // 1. Check if the input is an email or a username
     const isEmail = identifier.includes('@');
 
-    // 2. If it's a username, look up the corresponding email in the profiles table
     if (!isEmail) {
       const { data: userProfile, error: profileError } = await supabase
         .from("profiles")
-        .select("email") // We need to fetch the email associated with this username
+        .select("email")
         .eq("username", identifier)
         .single();
 
-      // If no profile is found or there's an error, reject the login
       if (profileError || !userProfile || !userProfile.email) {
         return res.render("login/index", {
           error: "Invalid username or password",
@@ -37,11 +64,9 @@ router.post("/loginAccount", async (req, res) => {
         });
       }
 
-      // Reassign the email we found in the database so Supabase can use it
-      loginEmail = userProfile.email; 
+      loginEmail = userProfile.email;
     }
 
-    // 3. Authenticate with Supabase using the resolved email
     const { data, error } = await supabase.auth.signInWithPassword({
       email: loginEmail,
       password: password,
@@ -49,19 +74,25 @@ router.post("/loginAccount", async (req, res) => {
 
     if (error) {
       console.error("Login error:", error);
+
+      // If Supabase rejects because the email isn't confirmed yet, send them
+      // back to the verify page rather than showing a generic error
+      if (error.message?.toLowerCase().includes("email not confirmed")) {
+        return res.redirect(`/login/verify-email?email=${encodeURIComponent(loginEmail)}`);
+      }
+
       return res.render("login/index", {
-        error: "Invalid username or password", // Use a generic message for security
+        error: "Invalid username or password",
         activeForm: "loginForm",
         formData: req.body
       });
     }
 
-    // Store session tokens in HTTP-only cookies
     res.cookie('sb-access-token', data.session.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.cookie('sb-refresh-token', data.session.refresh_token, {
@@ -72,9 +103,7 @@ router.post("/loginAccount", async (req, res) => {
     });
 
     console.log("Login successful:", data.user.email);
-    
-    // Redirect to dashboard
-    res.redirect("/"); 
+    res.redirect("/");
 
   } catch (err) {
     console.error("Unexpected error:", err);
@@ -86,8 +115,9 @@ router.post("/loginAccount", async (req, res) => {
   }
 });
 
+// ─── Sign Up ──────────────────────────────────────────────────────────────────
 router.post("/createAccount", async (req, res) => {
-  //Check if user exists and that the username is valid
+  // Check username is not already taken
   const { data: existingUser } = await supabase
     .from("profiles")
     .select("id")
@@ -97,12 +127,11 @@ router.post("/createAccount", async (req, res) => {
   if (existingUser) {
     return res.render("login/index", {
       error: "Username already taken",
-      activeForm: "signupForm", 
+      activeForm: "signupForm",
       formData: req.body
     });
   }
 
-  //Create User
   const { data, error } = await supabase.auth.signUp({
     email: req.body.email_addr,
     password: req.body.password,
@@ -117,30 +146,15 @@ router.post("/createAccount", async (req, res) => {
     console.error("Signup error:", error);
     return res.render("login/index", {
       error: error.message,
-      activeForm: "signupForm", 
+      activeForm: "signupForm",
       formData: req.body
     });
   }
-  
-  console.log("Signup successful:", data);
-  
-  // set cookies for signup (auto-login after signup)
-  // if (data.session) {
-  //   res.cookie('sb-access-token', data.session.access_token, {
-  //     httpOnly: true,
-  //     secure: process.env.NODE_ENV === 'production',
-  //     sameSite: 'lax',
-  //     maxAge: 7 * 24 * 60 * 60 * 1000
-  //   });
 
-  //   res.cookie('sb-refresh-token', data.session.refresh_token, {
-  //     httpOnly: true,
-  //     secure: process.env.NODE_ENV === 'production',
-  //     sameSite: 'lax',
-  //     maxAge: 7 * 24 * 60 * 60 * 1000
-  //   });
-  // }
-  res.redirect("/login"); 
-})
+  console.log("Signup successful:", data);
+
+  // Redirect to the verify-email page, passing the email so it can be displayed
+  res.redirect(`/login/verify-email?email=${encodeURIComponent(req.body.email_addr)}`);
+});
 
 module.exports = router;
