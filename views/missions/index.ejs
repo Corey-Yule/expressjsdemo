@@ -7,38 +7,39 @@
     <link rel="stylesheet" href="/css/missions.css">
     <title>Missions</title>
   </head>
-
-  <!--Content-->
-   <body>
+  <body>
     <main class="main-content">
-     <div class="missions-body">
-      <div class="missions-container">
-        <h1 class="missions-title">Missions</h1>
-        <section class="missions-section">
-          <h2 class="mission-title">Daily</h2>
-          <ul class="mission-list" id="daily-missions"></ul>
-        </section>
+      <div class="missions-body">
+        <div class="missions-container">
 
-        <section class="missions-section">
-          <h2 class="mission-title">Weekly</h2>
-          <ul class="mission-list" id="weekly-missions"></ul>
-        </section>
+          <h1 class="missions-title">Missions</h1>
 
-        </div>
-        <div class="missions-button-wrapper">
-         <button id="new-missions-button" class="new-missions-button" style="display:none;">
-            Generate New Missions
-         </button>
+          <section class="missions-section">
+            <h2 class="mission-title">Daily</h2>
+            <ul class="mission-list" id="daily-missions"></ul>
+          </section>
+
+          <section class="missions-section">
+            <h2 class="mission-title">Weekly</h2>
+            <ul class="mission-list" id="weekly-missions"></ul>
+          </section>
+
+          <div class="missions-button-wrapper">
+            <button id="new-missions-button" class="new-missions-button" style="display:none;">
+              Generate New Missions
+            </button>
+          </div>
+
         </div>
       </div>
-  </main>
+    </main>
 
-      <!--JavaScript-->
     <script type="module">
       import { generateNavBar, generateBackground } from '/javascript/components/controller.js'
       generateBackground();
-      generateNavBar()
-      </script>
+      generateNavBar();
+    </script>
+    <script id="missions-data" type="application/json"><%- JSON.stringify(missions) %></script>
     <script src="/javascript/missions.js"></script>
-    </body>
-  </html>
+  </body>
+</html>

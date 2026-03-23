@@ -3,82 +3,87 @@ const router = express.Router()
 const supabase = require("../middleware/supabase.js")
 const { getUID, checkAuth, authenticateUser } = require("../middleware/auth.js");
 
-router.get('/', authenticateUser ,async (req, res) => {
+router.get('/', authenticateUser, async (req, res) => {
   checkAuth(req);
   const uid = await getUID(req);
 
+  try {
+    const currentMissions = await checkCurMissions(uid);
 
-  //TODO: if checkCurMissions is empty generate daily and weekly missions. If checkCurMissions has weekly missions generate daily missions
-  // when passing to the render, pass in a completed check so that the user can manually complete them
-  // will get the supabase auto deletion done
+    // Join current_missions with missions table to determine types present
+    const { data: joinedMissions, error: joinError } = await supabase
+      .from('current_missions')
+      .select('mission, deletion_date, missions(id, type)')
+      .eq('user', uid);
 
+    if (joinError) throw new Error(joinError.message);
 
-  const missions = await generateMissions(uid, "DAILY")
-  console.log(missions)
+    const hasDaily  = joinedMissions?.some(m => m.missions?.type === 'DAILY');
+    const hasWeekly = joinedMissions?.some(m => m.missions?.type === 'WEEKLY');
 
+    if (!hasWeekly) await generateAndStoreMissions(uid, 'WEEKLY');
+    if (!hasDaily)  await generateAndStoreMissions(uid, 'DAILY');
 
-  res.render('missions/index')
+    // Re-fetch with full mission details for the view
+    const { data: missions, error: refetchError } = await supabase
+      .from('current_missions')
+      .select('id, deletion_date, missions(id, type, description)') 
+      .eq('user', uid);
 
-  // // Fetch missions for the specific player
-  // const { data: missions, error } = await supabase
-  //   .from('mission_completions')
-  //   .select('username, missions_complete')
-  //   .eq('player_uuid', uid); // Match the column name in the DB
-  //
-  // if (error) {
-  //   console.error("Supabase Error:", error.message);
-  //   return res.status(500).send("Error fetching missions");
-  // }
-  //
-  // const rows = missions ?? [];
-  // 
-  // // Extracting just the mission completion numbers/IDs
-  // const missionList = rows.map(row => row.missions_complete);
-  // 
-  // console.log("Missions completed by user:", missionList);
-  //
-  // // Pass the data to the EJS view
-  // res.render('missions/index', { 
-  //   missions: rows,
-  //   missionList: missionList 
-  // });
-})
+    if (refetchError) throw new Error(refetchError.message);
+
+    res.render('missions/index', { missions: missions ?? [] });
+
+  } catch (err) {
+    console.error("Missions route error:", err.message);
+    res.status(500).send("Error loading missions");
+  }
+});
+
+// ── Helpers ────────────────────────────────────────────────────────────────
 
 async function checkCurMissions(uid) {
   const { data, error } = await supabase
     .from('current_missions')
     .select('*')
-    .eq('user', uid)
+    .eq('user', uid);
 
-  if (error) {
-    console.error("Data fetching error", error.message)
-    return res.status(500).send("Error fetching missions")
-  }
-
-  return data
+  if (error) throw new Error(`checkCurMissions: ${error.message}`);
+  return data ?? [];
 }
 
-async function generateMissions(uid, type) {
-  let missionsToPush = []
-
-  const { data, error } = await supabase
+async function generateAndStoreMissions(uid, type) {
+  const { data: pool, error: fetchError } = await supabase
     .from('missions')
     .select('id')
-    .eq('type', type)
+    .eq('type', type);
 
-  if (error) {
-    console.error("Data fetching error", error.message)
-    return res.status(500).send("Error fetching missions")
+  if (fetchError) throw new Error(`generateMissions fetch: ${fetchError.message}`);
+  if (!pool || pool.length < 3) throw new Error(`Not enough ${type} missions in pool`);
+
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  const chosen   = shuffled.slice(0, 3);
+
+  // Set deletion_date based on type
+  const deletionDate = new Date();
+  if (type === 'DAILY') {
+    deletionDate.setDate(deletionDate.getDate() + 1); // expires tomorrow
+  } else if (type === 'WEEKLY') {
+    deletionDate.setDate(deletionDate.getDate() + 7); // expires in 7 days
   }
+  const formattedDate = deletionDate.toISOString().split('T')[0]; // 'YYYY-MM-DD'
 
-  for (let i = 0; i < 3; i ++) {
-    let ran = Math.floor(Math.random() * data.length)
-    missionsToPush.push(data[ran])
-    data.splice(ran, 1)
-  }
+  const rows = chosen.map(m => ({
+    user:          uid,           
+    mission:       m.id,          
+    deletion_date: formattedDate,
+  }));
 
-  return missionsToPush
+  const { error: insertError } = await supabase
+    .from('current_missions')
+    .insert(rows);
+
+  if (insertError) throw new Error(`generateMissions insert: ${insertError.message}`);
 }
 
-module.exports = router
- 
+module.exports = router;

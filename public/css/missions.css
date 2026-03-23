@@ -1,135 +1,167 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   color: white;
-  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   background: #101417;
 }
 
+/* ── Layout ─────────────────────────────────────── */
+
+.main-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .missions-body {
-  max-width: 1200px;
+  max-width: 860px;
   margin: 140px auto 60px;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-.missions-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 24px;
-  letter-spacing: 2px;
-  margin: 0 0 28px 4px;
-  text-align: center;
-}
-
 .missions-container {
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
   background: #111720;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  padding: 40px 32px;
-  position: relative;
-  z-index: 10;
-  animation: fadeInUp 0.4s ease-out;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  padding: 40px 36px;
   box-sizing: border-box;
+  animation: fadeInUp 0.4s ease-out;
 }
 
-.missions-container section {
-  margin-bottom: 32px;
+/* ── Title ──────────────────────────────────────── */
+
+.missions-title {
+  font-size: 22px;
+  letter-spacing: 3px;
+  margin: 0 0 36px;
+  text-align: center;
+  color: #00a2ff;
+  text-shadow: 0 0 20px rgba(0, 162, 255, 0.4);
 }
 
-.missions-container section:last-child {
+/* ── Sections ───────────────────────────────────── */
+
+.missions-section {
+  margin-bottom: 36px;
+}
+
+.missions-section:last-child {
   margin-bottom: 0;
 }
 
-.page-title {
-  text-align: center;
-  margin: 0 0 24px 0;
-}
-
-.page-title h1 {
-  margin: 0;
-  font-size: 32px;
-}
-
-.main-content {
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 20px 60px;
-  box-sizing: border-box;
-}
-
 .mission-title {
-  font-size: 18px;
-  letter-spacing: 2px;
-  margin: 28px 0 14px;
-  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin: 0 0 14px;
+  color: #888;
+  text-transform: uppercase;
 }
+
+/* ── Mission list ───────────────────────────────── */
 
 .mission-list {
   list-style: none;
   padding: 0;
   margin: 0;
-
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.mission-card {
-  background: #000;
-  border-radius: 14px;
-  padding: 8px 12px;
+/* ── Mission item card ──────────────────────────── */
 
+.mission-item {
+  background: #0d1219;
+  border: 1px solid #1e2a38;
+  border-radius: 12px;
+  padding: 16px 18px;
   display: flex;
   align-items: center;
-  gap: 10px;
-
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
-  transition: transform 0.15s ease;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.2s ease, transform 0.15s ease;
 }
 
-.mission-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 7px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-  line-height: 1;
-  color: white;
-
-  border: 3px solid rgba(255, 255, 255, 0.2);
-}
-
-.mission-card.done .mission-icon {
-  background: #40c800;
-}
-
-.mission-card.not-done .mission-icon {
-  background: #e01b1b;
-}
-
-.mission-text {
-  font-size: 13px;
-  letter-spacing: 0.5px;
-  font-family: 'Press Start 2P', monospace;
-}
-
-.mission-card:hover {
+.mission-item:hover {
+  border-color: #2a3f58;
   transform: translateY(-2px);
 }
 
+/* Completed state */
+.mission-item.mission-completed {
+  opacity: 0.5;
+  border-color: #40c800;
+}
+
+.mission-item.mission-completed .mission-description {
+  text-decoration: line-through;
+  color: #666;
+}
+
+/* ── Mission info ───────────────────────────────── */
+
+.mission-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0; /* prevents text overflow */
+}
+
+.mission-description {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #e0e0e0;
+  letter-spacing: 0.5px;
+}
+
+.mission-expiry {
+  font-size: 8px;
+  color: #4a6070;
+  letter-spacing: 0.5px;
+}
+
+/* ── Complete button ────────────────────────────── */
+
+.mission-complete-btn {
+  flex-shrink: 0;
+  background: transparent;
+  color: #00a2ff;
+  border: 1px solid #00a2ff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.mission-complete-btn:hover:not(:disabled) {
+  background: #00a2ff;
+  color: #000;
+}
+
+.mission-complete-btn:disabled {
+  border-color: #40c800;
+  color: #40c800;
+  cursor: default;
+}
+
+/* ── Button wrapper ─────────────────────────────── */
+
 .missions-button-wrapper {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 28px;
 }
 
 .new-missions-button {
@@ -139,12 +171,12 @@ body {
   border-radius: 14px;
   padding: 14px 24px;
   font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
+  font-size: 10px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .new-missions-button:hover {
   background: #00a2ff;
-  color: black;
+  color: #000;
 }
