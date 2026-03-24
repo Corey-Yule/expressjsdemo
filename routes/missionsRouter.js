@@ -26,8 +26,8 @@ router.post('/completed/:id', authenticateUser, async (req, res) =>  {
   const uid = await getUID(req)
 
   try {
-    deleteCompletedMission(req)
-    incrementCompletedMissions(uid)
+    const deletedMissions = await deleteCompletedMission(req)
+    const updatedMissions = await incrementCompletedMissions(uid)
   } catch (err) {
     console.error("Missions completed error:", err.message)
     res.status(500).send("Error completing mission")
