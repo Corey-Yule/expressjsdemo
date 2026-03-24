@@ -36,8 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="mission-description">${m.missions.description}</span>
           <span class="mission-expiry">${formatExpiry(m.deletion_date)}</span>
         </div>
-        <button class="mission-complete-btn" data-id="${m.id}">Complete</button>
       `;
+
+      if (m.missions.completed) { 
+        li.innerHTML += `
+          <form action="/missions/completed/${m.id}" method="POST">
+            <button class="mission-complete-btn" type="submit">Complete</button>
+          </form>
+        ` 
+      }
 
       container.appendChild(li);
     });
@@ -46,13 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMissions(daily,  dailyList);
   renderMissions(weekly, weeklyList);
 
-  document.querySelectorAll('.mission-complete-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const button = e.target;
-      button.textContent = '✓ Done';
-      button.disabled = true;
-      button.closest('li').classList.add('mission-completed');
-      // TODO: POST /missions/:id/complete
-    });
-  });
+  // document.querySelectorAll('.mission-complete-btn').forEach(btn => {
+  //   btn.addEventListener('click', (e) => {
+  //     const button = e.target;
+  //     button.textContent = '✓ Done';
+  //     button.disabled = true;
+  //     button.closest('li').classList.add('mission-completed');
+  //     // TODO: POST /missions/:id/complete
+  //   });
+  // });
 });
